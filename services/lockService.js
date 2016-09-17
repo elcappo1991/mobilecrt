@@ -21,11 +21,11 @@ var addLock=function(lock){
  * this function delete a lock and take in parameter his id
  * @param data
  */
-var deleteLock=function(idLock){
+var deleteLock=function(idLock,cb){
 
-    models.lock.findOne(idLock).then(function(lock) {
+    models.lock.findOne({where:{id:idLock}}).then(function(lock) {
 
-        lock.destroy();
+        cb(lock.destroy());
     });
 };
 /**
@@ -35,15 +35,41 @@ var deleteLock=function(idLock){
  */
 var updateLock=function(idLock,lock){
 
-    models.lock.findOne(idLock).then(function(lockToUpdate){
+    models.lock.findOne({where:{id:idLock}}).then(function(lockToUpdate){
 
         lockToUpdate.update(lock);
     });
 
 }
 
+/**
+ * function that return all locks
+ * @param cb
+ */
+var getAllLock=function(cb){
+
+    models.lock.findAll().then(function(rows){
+        return cb(rows);
+    })
+}
+
+
+/**
+ * function that return a lock by their id
+ * @param idManager
+ */
+var getLockById=function(idLock,cb){
+
+    models.manager.findOne({where:{id: idLock}}).then(function(lockfound){
+
+        return cb(lockfound);
+    })
+
+}
 exports.deleteLock=deleteLock;
 exports.addLock=addLock;
 exports.updateLock=updateLock;
+exports.getAllLock=getAllLock;
+exports.getLockById=getLockById;
 
 

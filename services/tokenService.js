@@ -23,7 +23,7 @@ var addToken=function(token){
  */
 var deleteToken=function(idtoken){
 
-    models.token.findOne(idtoken).then(function(token) {
+    models.token.findOne({where:{id:idtoken}}).then(function(token) {
 
         token.destroy();
     });
@@ -36,15 +36,43 @@ var deleteToken=function(idtoken){
  */
 var updateToken=function(idtoken,token){
 
-    models.token.findOne(idtoken).then(function(tokenToUpdate){
+    models.token.findOne({where:{id:idtoken}}).then(function(tokenToUpdate){
 
         tokenToUpdate.update(token);
     });
 
 }
 
+
+/**
+ * function that return all tokens
+ * @param cb
+ */
+var getAllToken=function(cb){
+
+    models.token.findAll().then(function(rows){
+        return cb(rows);
+    })
+}
+
+
+/**
+ * function that return a token by their id
+ * @param idToken
+ */
+var getLockById=function(idToken,cb){
+
+    models.manager.findOne({where:{id: idToken}}).then(function(tokenFound){
+
+        return cb(tokenFound);
+    })
+
+}
+
 exports.deleteToken=deleteToken;
 exports.addToken=addToken;
 exports.updateToken=updateToken;
+exports.getAllToken=getAllToken;
+exports.getLockById=getLockById;
 
 

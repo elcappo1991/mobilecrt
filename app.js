@@ -7,7 +7,11 @@ var bodyParser = require('body-parser');
 var engine=require('ejs-locals');
 var routes = require('./routes/index');
 
-var users = require('./routes/users');
+var manager = require('./routes/manager');
+var admin = require('./routes/admin');
+var account = require('./routes/account');
+
+
 var  session= require('express-session');
 var request = require('request');
 var passport = require('passport');
@@ -75,7 +79,10 @@ app.use(function(req, res, next){
  */
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/manager', manager);
+app.use('/admin', admin);
+app.use('/account', account);
+
 
 
 
@@ -85,7 +92,7 @@ app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-
+console.log('************////////////////////////*******************////////////////// errueeur *****////////////****************************////////////////////////')
   res.locals.user = null;
   res.render('error');
 
@@ -98,7 +105,7 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
-
+console.log(err);
     res.locals.user = null;
     res.render('error');
   });
@@ -108,7 +115,7 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
-
+  console.log(err);
   res.locals.user = null;
   res.render('error');
 });

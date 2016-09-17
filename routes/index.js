@@ -4,28 +4,28 @@ var passport = require('passport');
 
 /* GET home page. */
 router.get('/',function(req, res, next) {
-   if(req.isAuthenticated()){
+
+   if(req.isAuthenticated() && req.user.role=="admin"){
 
        res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
-       res.redirect('/home');
+       res.redirect('/admin');
+   }else  if(req.isAuthenticated() && req.user.role=="manager"){
+
+       res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
+       res.redirect('/manager');
    }else{
-       res.locals.user= null;
+
         res.render('login');
     }
 
 });
-//get the home page function
-router.get('/home',isLoggedIn, function (req, res) {
 
-    res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
-    res.render('index');
+router.get('/login',function(req,res){
+    res.render('login');
 });
-//get the add  page function
-router.get('/add',isLoggedIn, function (req, res) {
 
-    res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
-    res.render('addClient');
-});
+
+
 /**
  *
  * passport authentication post request
@@ -56,10 +56,10 @@ router.post('/login',function(req, res, next) {
 
           if(user.role=='admin'){
 
-            return res.redirect('/home');
+            return res.redirect('/admin');
           }else
           {
-            return res.redirect('/home');
+            return res.redirect('/manager');
           }
 
         });
