@@ -3,13 +3,13 @@ var router = express.Router();
 var passport = require('passport');
 
 /* GET home page. */
-router.get('/',function(req, res, next) {
+router.get('/',isLoggedIn,function(req, res, next) {
 
-   if(req.isAuthenticated() && req.user.role=="admin"){
+   if( req.user.role=="admin"){
 
        res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
        res.redirect('/admin');
-   }else  if(req.isAuthenticated() && req.user.role=="manager"){
+   }else  if(req.user.role=="manager"){
 
        res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
        res.redirect('/manager');
@@ -21,6 +21,7 @@ router.get('/',function(req, res, next) {
 });
 
 router.get('/login',function(req,res){
+    res.locals.message=null;
     res.render('login');
 });
 
@@ -41,14 +42,15 @@ router.post('/login',function(req, res, next) {
 
 
 
-          return res.redirect('/');
+          return res.redirect('/login');
         }
         if (!user) {
 
 
 
+            res.locals.message="invalid email or password";
 
-            return res.redirect('/');;
+            return res.render('login');;
         }
 
 
@@ -78,7 +80,7 @@ router.post('/login',function(req, res, next) {
 router.get('/logout', function (req, res) {
 
     req.logout();
-    res.redirect('/');
+    res.redirect('/login');
 });
 //verifiy if user is connected or not
 function isLoggedIn(req, res, next) {
@@ -88,7 +90,7 @@ function isLoggedIn(req, res, next) {
 
     //   return next();
 
-    res.redirect('/error');
+    res.redirect('/login');
 
 }
 module.exports = router;

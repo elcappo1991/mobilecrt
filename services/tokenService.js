@@ -1,6 +1,7 @@
 
 var models=require('./../models');
 var config = require('./../config/dbconfig.json');
+var shortid=require('shortid');
 
 
 
@@ -13,7 +14,7 @@ var config = require('./../config/dbconfig.json');
  *
  */
 var addToken=function(token){
-
+    token.key=generateToken();
     models.token.create(token).then(function(){});
 };
 
@@ -67,6 +68,15 @@ var getLockById=function(idToken,cb){
         return cb(tokenFound);
     })
 
+}
+
+
+var generateToken=function(){
+
+    shortid.characters('0123456789abcdefghijk@mnopqrstuvwxyzABCDEFGH#JKLMN-PQRSTUVWXYZ*_');
+
+    generatedPass=shortid.generate();
+    return generatedPass;
 }
 
 exports.deleteToken=deleteToken;

@@ -1,0 +1,76 @@
+<% layout('../templates/layout')%>
+
+<script type="text/javascript" src="/angular_app/angular_manager_app.js" xmlns="http://www.w3.org/1999/html"></script>
+<div ng-app="app" ng-controller="homePage">
+
+
+
+    <div class="content-header content-header-media">
+        <div class="header-section">
+            <div class="row">
+                <!-- Main Title (hidden on small devices for the statistics to fit) -->
+                <div class="col-md-4 col-lg-6 hidden-xs hidden-sm">
+                    <h1>Welcome <strong>{{user_info.first_name}}</strong><br><small>You can change your password here</small></h1>
+                </div>
+                <!-- END Main Title -->
+
+            </div>
+        </div>
+        <!-- For best results use an image with a resolution of 2560x248 pixels (You can also use a blurred image with ratio 10:1 - eg: 1000x100 pixels - it will adjust and look great!) -->
+        <img src="/img/placeholders/headers/dashboard_header.jpg" alt="header image" class="animation-pulseSlow">
+    </div>
+
+
+
+<div class="content-float">
+
+
+    <div class="block">
+        <!-- Info Title -->
+        <div class="block-title">
+            <div class="block-options pull-right">
+
+            </div>
+            <h2> <strong>  Change your password</strong></h2>
+        </div>
+        <!-- END Info Title -->
+
+        <!-- Info Content -->
+        <form action="/manager/changepassword" method="post" class="form-horizontal form-bordered" >
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-star"></i></span>
+                        <input id="oldpassword" name="oldpassword" class="form-control" placeholder="Old password" type="password">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        <input id="newpassword1" name="newpassword" class="form-control" placeholder="New password" type="password" >
+                        <span class="input-group-addon"><i class="fa fa-star"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="input-group">
+                        <input id="newpassword-check" name="newpassword-check" class="form-control" placeholder="New password" type="password">
+                        <span class="input-group-addon"><i class="fa fa-star"></i></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group form-actions">
+                <div class="col-xs-12">
+                    <button type="submit" class="btn btn-sm btn-default">Submit</button>
+                </div>
+            </div>
+        </form>
+        <!-- END Info Content -->
+    </div>
+
+
+</div>
+
+    </div>

@@ -18,7 +18,13 @@ var conString = config.App.dbConfig.conString;
 var addUser=function(user){
 
     //user.password = CryptoJS.AES.encrypt(user.password, cryptoConfig.cryptKey).toString();
-    user.password = CryptoJS.AES.encrypt(user.first_name, cryptoConfig.cryptKey).toString();
+    if(user.password ==null){
+        user.password = CryptoJS.AES.encrypt(user.first_name, cryptoConfig.cryptKey).toString();
+
+    }
+    else{
+        user.password = CryptoJS.AES.encrypt(user.password, cryptoConfig.cryptKey).toString();
+    }
 
     models.manager.create(user).then(function(){
     });
@@ -58,7 +64,7 @@ var updateUser=function(idUser,user){
  */
 var getAllManagers=function(cb){
 
-    models.manager.findAll().then(function(rows){
+    models.manager.findAll({where:{role:'manager'}}).then(function(rows){
 
         return cb(rows);
     })
@@ -83,16 +89,21 @@ var getManagerById=function(idManager,cb){
  * @param oldPassword
  * @param newPassword
  */
-var changePassword=function(idManager,oldPassword,newPassword){
+var changePassword=function(idManager,oldPassword,newPassword,cb){
+        console.log('inside chande password function in managerService.js file');
+    verifiyPasswordMatch(idManager,oldPassword,function(res){
+        console.log(res+"********")
+        if(res){
+            models.manager.findOne({where:{id:idManager}}).then(function(managerToUpdate){
+                console.log(managerToUpdate)
+                managerToUpdate.password=  CryptoJS.AES.encrypt(newPassword, cryptoConfig.cryptKey).toString();;
+                cb(managerToUpdate.update(managerToUpdate,{fields:['password']}));
+            });
 
-    if(verifiyPasswordMatch(idManager,oldPassword)){
+        }
 
-        models.manager.findOne({where:{id:idManager}}).then(function(managerToUpdate){
-            managerToUpdate.password=newPassword;
-            managerToUpdate.update(managerToUpdate,{fields:['password']});
-        });
+    });
 
-    }
 
 
 }
@@ -104,7 +115,7 @@ var changePassword=function(idManager,oldPassword,newPassword){
  * @param oldPassword
  * @param cb
  */
-var verifiyPasswordMatch=function(idMAnager,oldPassword){
+var verifiyPasswordMatch=function(idMAnager,oldPassword,cb){
 
     pg.connect(conString,function (err,dbclient,ok) {
 
@@ -117,12 +128,12 @@ var verifiyPasswordMatch=function(idMAnager,oldPassword){
 
             if (( (CryptoJS.AES.decrypt(rows.rows[0].password.toString(), cryptoConfig.cryptKey).toString(CryptoJS.enc.Utf8)) == oldPassword)) {
                 console.log('password matchs');
-                return true;
+           return cb(true);
 
             }else{
-                return false;
+                return cb(false);
             }
-        })
+        });
 
 
     });

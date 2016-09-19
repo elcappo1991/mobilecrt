@@ -44,7 +44,7 @@ router.post('/add', isLoggedIn, requireRole('admin'),function(req,res){
 
 router.post('/delete', isLoggedIn, requireRole('admin'),function(req,res){
 
-    userservice.deleteUser(req.body,function(userDeleted){
+    managerService.deleteUser(req.body,function(userDeleted){
         console.log('user deleted :D '+userDeleted.id)
         res.json('deleted');
     });
