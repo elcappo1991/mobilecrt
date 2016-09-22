@@ -7,8 +7,8 @@
       "password": "",
       "host": ".",
       "conStringN":"postgres://postgres:Avempace_Postgre@192.168.1.10:5432/node",
-      "conStringc":"postgres://postgres:avempace@localhost:5432/node",
-      "conString":"postgres://opbvsizxavqnno:CDo2zruwKkgxN34yd_Cf4LX1D3@ec2-54-75-230-140.eu-west-1.compute.amazonaws.com:5432/d3epjur355r40l",
+      "conString":"postgres://postgres:avempace@localhost:5432/node",
+      "conStringc":"postgres://opbvsizxavqnno:CDo2zruwKkgxN34yd_Cf4LX1D3@ec2-54-75-230-140.eu-west-1.compute.amazonaws.com:5432/d3epjur355r40l",
       "mdp":"U2FsdGVkX18vPIP7RCxCpb9DlyyXKXZMIt5vl0HfQrA=",
       "GCMkey":"AIzaSyAjVhwKvnMBsS3nzzjyC9JkFr_gtKfUwxs"
 

@@ -3,7 +3,7 @@ var LocalStrategy   = require('passport-local').Strategy;
 
 var cryptoConfig = require('./cryptConf.json')
 var pg = require('pg');
-pg.defaults.ssl= true;
+//pg.defaults.ssl= true;
 var config = require('./dbconfig.json');
 var conString = config.App.dbConfig.conString;
 var models=require('./../models');
@@ -29,23 +29,31 @@ module.exports = function(passport) {
     passport.serializeUser(function(user, done) {
 
 
-        done(null, user.id);//for admn auth
+        done(null,user);//for admn auth
     });
 
     // used to deserialize the user
-    passport.deserializeUser(function(id, done) {
+    passport.deserializeUser(function(user, done) {
         pg.connect(conString,function (err,dbclient,ok){
 
             if(err){
                 return console.error('could not connect to the database '+ err);
             }
 
-
-            dbclient.query("select * from managers where id = $1",[id],function(err,rows){//for admn auth
+                if(user.role){
+            dbclient.query("select * from managers where id = $1",[user.id],function(err,rows){//for admn auth
 
             done(err, rows.rows[0]);
 
-        });
+        });}
+            else{
+
+                    dbclient.query("select * from accounts where id = $1",[user.id],function(err,rows){//for admn auth
+
+                        done(err, rows.rows[0]);
+
+                    });
+                }
             ok(); //release to the pool
         });
     });
@@ -64,9 +72,11 @@ module.exports = function(passport) {
         },
         function(req, email, password, done) { // callback with email and password from our form
 
-            process.nextTick(function(){
+            process.nextTick(function() {
 
-                pg.connect(conString,function (err,dbclient,ok) {
+                verify(email,function(role){
+                    console.log('*************role*****************'+role)
+                pg.connect(conString, function (err, dbclient, ok) {
 
                     if (err) {
 
@@ -74,17 +84,17 @@ module.exports = function(passport) {
                     }
 
 
-                    dbclient.query("SELECT * FROM managers WHERE email = $1", [email], function (err, rows) {
+                    dbclient.query('SELECT * FROM '+role+' WHERE email = $1', [email], function (err, rows) {
 
 
-                        if (err){
-                            console.log('erreir'+err);
+                        if (err) {
+                            console.log('erreir' + err);
                             return done(err);
                         }
-                        if (!rows.rows.length){
+                        if (!rows.rows.length) {
                             console.log('user does not exsist');
                             return done(null, false);
-                    }
+                        }
 
 
                         if (!( (CryptoJS.AES.decrypt(rows.rows[0].password.toString(), cryptoConfig.cryptKey).toString(CryptoJS.enc.Utf8)) == password)) {
@@ -94,13 +104,15 @@ module.exports = function(passport) {
                         }
 
 
-                          console.log("user found  "+rows.rows[0]);
-                          return done(null, rows.rows[0]);
+                        return done(null, rows.rows[0]);
 
 
                     });
                     ok();
                 });
+
+
+            });
             });
 
 
@@ -108,3 +120,38 @@ module.exports = function(passport) {
         }));
 
 };
+
+
+var verify =function(email,cb){
+
+var res = '';
+
+    pg.connect(conString,function (err,dbclient,ok) {
+
+        if (err) {
+
+            return console.error('could not connect to the database ' + err);
+        }
+
+
+        dbclient.query("SELECT * FROM accounts WHERE email = $1", [email], function (err, rows) {
+
+
+            if (!rows.rows.length){
+                console.log('dans la fonction verify'+res)
+                return cb(res= 'managers')
+
+            }else {
+                console.log('dans la fonction verify'+res)
+                return cb(res= 'accounts')
+            }
+
+
+
+
+    });
+
+});
+
+
+}

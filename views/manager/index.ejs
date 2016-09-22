@@ -1,6 +1,8 @@
 
 <% layout('../templates/layout')%>
 
+
+<script type="text/javascript" src="/javascripts/iso-3166-country-codes-angular.js"></script>
 <script type="text/javascript" src="/angular_app/angular_manager_app.js"></script>
 <div ng-app="app" ng-controller="homePage">
 
@@ -38,7 +40,7 @@
                         <div class="col-sm-3 hidden-xs">
                             <h2 class="animation-hatch">
                                 <strong>27° C</strong><br>
-                                <small><i class="fa fa-map-marker"></i> France</small>
+                                <small><i class="fa fa-map-marker"></i> {{location| isoCountry}}</small>
                             </h2>
                         </div>
                     </div>

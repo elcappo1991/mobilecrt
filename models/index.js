@@ -16,11 +16,16 @@ var sequelize = new Sequelize(conString);
  */
 var models = [
     'manager',
-    'lock',
+    'room',
     'token',
     'account',
     'authorisation',
-    'authorisationLock'
+    'authorisationLock',
+    'reservation',
+    'event',
+    'companion',
+    'feedback',
+    'programmateur'
 
 ];
 /**
@@ -41,13 +46,18 @@ models.forEach(function(model) {
 
     m.account.belongsTo(m.manager);
     m.token.belongsTo(m.account);
-    m.token.belongsTo(m.lock);
-    m.lock.belongsTo(m.manager);
+    m.token.belongsTo(m.room);
+    m.room.belongsTo(m.manager);
     m.authorisation.belongsTo(m.manager);
     m.authorisation.belongsTo(m.token);
     m.authorisationLock.belongsTo(m.authorisation);
-    m.authorisationLock.belongsTo(m.lock);
-
+    m.authorisationLock.belongsTo(m.room);
+    m.feedback.belongsTo(m.account);
+    m.feedback.belongsTo(m.reservation);
+    m.reservation.belongsTo(m.account);
+    m.programmateur.belongsTo(m.manager);
+    m.event.belongsTo(m.room);
+    m.room.belongsTo(m.reservation);
    /* m.programmateur.belongsTo(m.user);
     m.hall.belongsTo(m.residence);
     m.garage.hasMany(m.equipement);

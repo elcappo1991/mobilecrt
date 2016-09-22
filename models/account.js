@@ -26,7 +26,9 @@ module.exports = function(sequelize, DataTypes) {
         checkin: DataTypes.BOOLEAN,
         is_mobile_user: DataTypes.BOOLEAN,
         is_card_user: DataTypes.BOOLEAN,
-        checkout: DataTypes.BOOLEAN
+        checkout: DataTypes.BOOLEAN,
+        num_passport: DataTypes.STRING,
+        fidelity_point : DataTypes.INTEGER
 
     }, {timestamps: true});
 

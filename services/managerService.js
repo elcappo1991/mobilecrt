@@ -4,7 +4,7 @@ var config = require('./../config/dbconfig.json');
 var CryptoJS = require("crypto-js");
 var cryptoConfig = require('./../config/cryptConf.json');
 var pg = require('pg');
-pg.defaults.ssl= true;
+//pg.defaults.ssl= true;
 var conString = config.App.dbConfig.conString;
 
 

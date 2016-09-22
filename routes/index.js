@@ -13,9 +13,12 @@ router.get('/',isLoggedIn,function(req, res, next) {
 
        res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
        res.redirect('/manager');
-   }else{
-
-        res.render('login');
+   }else if(isLoggedIn){
+       res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
+       res.redirect('/account');
+   }
+   else{
+        res.redirect('login');
     }
 
 });
@@ -55,8 +58,11 @@ router.post('/login',function(req, res, next) {
 
 
         req.logIn(user, function(err) {
+            if(!user.role){
+               return res.redirect('/account')
+            }
 
-          if(user.role=='admin'){
+          else if(user.role=='admin'){
 
             return res.redirect('/admin');
           }else

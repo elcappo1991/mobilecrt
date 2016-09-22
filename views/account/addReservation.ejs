@@ -1,0 +1,69 @@
+<% layout('../templates/layoutAccount')%>
+
+
+
+<script type="text/javascript" src="/angular_app/angular_account_app.js"></script>
+<div ng-app="myApp" ng-controller="APPController1">
+
+
+    <div class="content-float">
+
+
+        <div class="block">
+            <!-- Info Title -->
+            <div class="block-title">
+                <div class="block-options pull-right">
+
+                </div>
+                <h2> <strong>  Add reservation  </strong></h2>
+            </div>
+            <!-- END Info Title -->
+
+            <!-- Info Content -->
+            <form action="/account/addReservation" method="post" class="form-horizontal form-bordered"  id="register">
+
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <input type="text" id="type_room" name="type_room" class="form-control " placeholder="booking type" required>
+                            <span class="input-group-addon"><i class="fa  fa-star"></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="input-group">
+                            <input type="number" id="room_number" name="room_number" class="form-control " placeholder="total room to book " required>
+                            <span class="input-group-addon"><i class=" fa fa-camera "></i></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class=" col-md-1 control-label">From</label>
+                    <div class="col-md-2 col-md-offset-2">
+                        <input id="start_date" name="start_date" class="form-control input-datepicker" data-date-format="mm-dd-yyyy" placeholder="dd-mm-yyyy" type="text">
+
+
+                </div>
+                    <label class=" col-md-2 control-label">To</label>
+                    <div class="col-md-2 col-md-offset-1">
+                        <input id="end_date" name="end_date" class="form-control input-datepicker" data-date-format="mm-dd-yyyy" placeholder="dd-mm-yyyy" type="text">
+                    </div>
+
+                    </div>
+
+
+
+                <div class="form-group form-actions">
+                    <div class="col-xs-12">
+                        <button type="submit" class="btn btn-sm btn-default">Submit</button>
+                    </div>
+                </div>
+            </form>
+            <!-- END Info Content -->
+        </div>
+
+
+    </div>
+
+</div>

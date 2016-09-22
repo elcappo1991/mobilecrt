@@ -4,7 +4,7 @@ var config = require('./../config/dbconfig.json');
 var CryptoJS = require("crypto-js");
 var cryptoConfig = require('./../config/cryptConf.json');
 var pg = require('pg');
-pg.defaults.ssl= true;
+//pg.defaults.ssl= true;
 var conString = config.App.dbConfig.conString;
 
 
@@ -85,7 +85,7 @@ var getAccountById=function(idAccount,cb){
  * @param oldPassword
  * @param cb
  */
-var verifiyPasswordMatch=function(idAccount,oldPassword){
+var verifiyPasswordMatch=function(idAccount,oldPassword,cb){
 
     pg.connect(conString,function (err,dbclient,ok) {
 
@@ -98,10 +98,10 @@ var verifiyPasswordMatch=function(idAccount,oldPassword){
 
             if (( (CryptoJS.AES.decrypt(rows.rows[0].password.toString(), cryptoConfig.cryptKey).toString(CryptoJS.enc.Utf8)) == oldPassword)) {
                 console.log('password matchs');
-                return true;
+                return cb(true);
 
             }else{
-                return false;
+                return cb(false);
             }
         })
 
@@ -117,18 +117,21 @@ var verifiyPasswordMatch=function(idAccount,oldPassword){
  * @param oldPassword
  * @param newPassword
  */
-var changePassword=function(idAccount,oldPassword,newPassword){
+var changePassword=function(idAccount,oldPassword,newPassword,cb){
 
-    if(verifiyPasswordMatch(idAccount,oldPassword)){
+   verifiyPasswordMatch(idAccount,oldPassword,function(res){
+            if(res){
+                models.account.findOne({where:{id:idAccount}}).then(function(accountToUpdate){
 
-        models.manager.findOne({where:{id:idManager}}).then(function(accountToUpdate){
-            accountToUpdate.password=newPassword;
-            accountToUpdate.update(accountToUpdate,{fields:['password']});
+                    accountToUpdate.password=  CryptoJS.AES.encrypt(newPassword, cryptoConfig.cryptKey).toString();;
+                    cb(accountToUpdate.update(accountToUpdate,{fields:['password']}));
+                });
+
+            }
+
+
         });
 
-    }else{
-        return false;
-    }
 
 
 }

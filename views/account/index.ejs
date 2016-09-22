@@ -1,0 +1,98 @@
+
+<% layout('../templates/layoutAccount')%>
+
+
+<script type="text/javascript" src="/angular_app/angular_account_app.js"></script>
+<div ng-app="myApp" ng-controller="APPController">
+
+    <div class="content-header content-header-media">
+        <div class="header-section">
+            <div class="row">
+                <!-- Main Title (hidden on small devices for the statistics to fit) -->
+                <div class="col-md-4 col-lg-6 hidden-xs hidden-sm">
+                    <h1>Welcome <strong>{{user_info.first_name}}</strong><br><small></small></h1>
+                </div>
+                <!-- END Main Title -->
+
+            </div>
+        </div>
+        <!-- For best results use an image with a resolution of 2560x248 pixels (You can also use a blurred image with ratio 10:1 - eg: 1000x100 pixels - it will adjust and look great!) -->
+        <img src="img/placeholders/headers/dashboard_header.jpg" alt="header image" class="animation-pulseSlow">
+    </div>
+
+
+<div class="row">
+    <div class="col-lg-4" ng-repeat="list in listReservation">
+        <!-- Edit Contact Block -->
+        <div class="block">
+            <!-- Edit Contact Title -->
+            <div class="block-title">
+                <div class="block-options pull-right">
+
+                </div>
+                <h2><i class="fa fa-ticket"></i> reservation {{list.id}}</h2>
+            </div>
+            <!-- END Edit Contact Title -->
+
+            <!-- Edit Contact Content -->
+            <form action="" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
+
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" for="edit-contact-name">reference</label>
+                    <div class="col-xs-9">
+                        <input id="edit-contact-name" name="edit-contact-name" class="form-control" value="{{list.ref}}" placeholder="" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" for="edit-contact-email">room type</label>
+                    <div class="col-xs-9">
+                        <input id="edit-contact-email" name="edit-contact-email" class="form-control" value="{{list.type_room}}" placeholder="" type="email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" for="edit-contact-phone">Room reserved</label>
+                    <div class="col-xs-9">
+                        <input id="edit-contact-phone" name="edit-contact-phone" class="form-control" value="{{list.room_number}}" placeholder="" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" for="edit-contact-phone">start date</label>
+                    <div class="col-xs-9">
+                        <input id="edit-contact-phone" name="edit-contact-phone" class="form-control" value="{{list.start_date | date :  'fullDate'}}" placeholder="" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" for="edit-contact-phone">end date</label>
+                    <div class="col-xs-9">
+                        <input id="edit-contact-phone" name="edit-contact-phone" class="form-control" value="{{list.end_date | date :  'fullDate' }}" placeholder="" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <div class="col-xs-12" >
+                        <input  class="btn btn-info" id="" name="button" class="form-control" value="Show details" placeholder="" type="button"  >
+                    </div>
+                </div>
+
+            </form>
+            <!-- END Edit Contact Content -->
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+</div>
+
+
+    </div>
+
+
+
+
+

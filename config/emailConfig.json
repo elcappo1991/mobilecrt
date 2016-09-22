@@ -1,0 +1,12 @@
+{
+
+
+"smtpTConfig":{
+    "service": "Gmail",
+    "auth": {
+    "user": "equipeavempace@gmail.com",
+    "pass": "avempaceAdmin_2016"
+            }
+}
+
+}

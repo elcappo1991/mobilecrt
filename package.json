@@ -17,18 +17,20 @@
     "express-mysql-session": "^1.1.1",
     "express-session": "latest",
     "express-validator": "~0.4.1",
+    "fs": "latest",
+    "https": "latest",
+    "iso-3166-country-codes-angular": "1.2.1",
     "moment-timezone": "~0.5.2",
     "morgan": "~1.7.0",
     "mysql": "latest",
     "node-rsa": "latest",
+    "nodemailer": "^0.7.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "pg": "^6.1.0",
     "request": "latest",
     "sequelize": "^3.19.3",
     "serve-favicon": "~2.3.0",
-    "shortid": "~2.2.4",
-    "https":"latest",
-    "fs":"latest"
+    "shortid": "~2.2.4"
   }
 }

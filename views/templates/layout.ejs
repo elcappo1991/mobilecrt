@@ -26,7 +26,7 @@
 
 <!-- Page Container -->
 
-<div id="page-container" class="sidebar-partial sidebar-visible-lg sidebar-no-animations">
+<div id="page-container" class=" sidebar-visible-lg sidebar-no-animations">
     <!-- Alternative Sidebar -->
     <div id="sidebar-alt">
         <!-- Wrapper for scrolling functionality -->
@@ -147,58 +147,11 @@
                 <!-- END Chat -->
 
                 <!-- Activity -->
-                <a href="javascript:void(0)" class="sidebar-title">
-                    <i class="fa fa-globe pull-right"></i> <strong>Activity</strong>UI
-                </a>
-                <div class="sidebar-section">
-                    <div class="alert alert-danger alert-alt">
-                        <small>just now</small><br>
-                        <i class="fa fa-thumbs-up fa-fw"></i> Upgraded to Pro plan
-                    </div>
-                    <div class="alert alert-info alert-alt">
-                        <small>2 hours ago</small><br>
-                        <i class="gi gi-coins fa-fw"></i> You had a new sale!
-                    </div>
-                    <div class="alert alert-success alert-alt">
-                        <small>3 hours ago</small><br>
-                        <i class="fa fa-plus fa-fw"></i> <a href="page_ready_user_profile.html"><strong>John Doe</strong></a> would like to become friends!<br>
-                        <a href="javascript:void(0)" class="btn btn-xs btn-primary"><i class="fa fa-check"></i> Accept</a>
-                        <a href="javascript:void(0)" class="btn btn-xs btn-default"><i class="fa fa-times"></i> Ignore</a>
-                    </div>
-                    <div class="alert alert-warning alert-alt">
-                        <small>2 days ago</small><br>
-                        Running low on space<br><strong>18GB in use</strong> 2GB left<br>
-                        <a href="page_ready_pricing_tables.html" class="btn btn-xs btn-primary"><i class="fa fa-arrow-up"></i> Upgrade Plan</a>
-                    </div>
-                </div>
+
                 <!-- END Activity -->
 
                 <!-- Messages -->
-                <a href="page_ready_inbox.html" class="sidebar-title">
-                    <i class="fa fa-envelope pull-right"></i> <strong>Messages</strong>UI (5)
-                </a>
-                <div class="sidebar-section">
-                    <div class="alert alert-alt">
-                        Debra Stanley<small class="pull-right">just now</small><br>
-                        <a href="page_ready_inbox_message.html"><strong>New Follower</strong></a>
-                    </div>
-                    <div class="alert alert-alt">
-                        Sarah Cole<small class="pull-right">2 min ago</small><br>
-                        <a href="page_ready_inbox_message.html"><strong>Your subscription was updated</strong></a>
-                    </div>
-                    <div class="alert alert-alt">
-                        Bryan Porter<small class="pull-right">10 min ago</small><br>
-                        <a href="page_ready_inbox_message.html"><strong>A great opportunity</strong></a>
-                    </div>
-                    <div class="alert alert-alt">
-                        Jose Duncan<small class="pull-right">30 min ago</small><br>
-                        <a href="page_ready_inbox_message.html"><strong>Account Activation</strong></a>
-                    </div>
-                    <div class="alert alert-alt">
-                        Henry Ellis<small class="pull-right">40 min ago</small><br>
-                        <a href="page_ready_inbox_message.html"><strong>You reached 10.000 Followers!</strong></a>
-                    </div>
-                </div>
+
                 <!-- END Messages -->
             </div>
             <!-- END Sidebar Content -->
@@ -242,17 +195,17 @@
                 <!-- Sidebar Navigation -->
                 <ul class="sidebar-nav">
                     <li>
-                        <a href="/" ><i class="gi gi-stopwatch sidebar-nav-icon"></i>Dashboard</a>
+                        <a href="/" id="dashboard"><i class="gi gi-stopwatch sidebar-nav-icon"></i>Dashboard</a>
                     </li>
                     <li class="sidebar-header">
 
                         <span class="sidebar-header-title">Profile Management</span>
                     </li>
                     <li>
-                        <a href="/manager/profile"><i class="gi gi-user sidebar-nav-icon"></i>Profile</a>
+                        <a href="/manager/profile" id="profile"><i class="gi gi-user sidebar-nav-icon"></i>Profile</a>
                     </li>
                     <li>
-                        <a href="/manager/changepwd"><i class="gi gi-settings sidebar-nav-icon"></i>Change Password</a>
+                        <a href="/manager/changepwd" id="changePassword"><i class="gi gi-settings sidebar-nav-icon"></i>Change Password</a>
                     </li>
 
                     <li class="sidebar-header">
@@ -285,36 +238,30 @@
                 <!-- END Sidebar Navigation -->
 
                 <!-- Sidebar Notifications -->
-                <!--  <div class="sidebar-header">
-                             <span class="sidebar-header-options clearfix">
-                                 <a href="javascript:void(0)" data-toggle="tooltip" title="Refresh"><i class="gi gi-refresh"></i></a>
-                             </span>
-                     <span class="sidebar-header-title">Activity</span>
-                 </div>
-                 <div class="sidebar-section">
-                     <div class="alert alert-success alert-alt">
-                         <small>5 min ago</small><br>
-                         <i class="fa fa-thumbs-up fa-fw"></i> You had a new sale ($10)
-                     </div>
-                     <div class="alert alert-info alert-alt">
-                         <small>10 min ago</small><br>
-                         <i class="fa fa-arrow-up fa-fw"></i> Upgraded to Pro plan
-                     </div>
-                     <div class="alert alert-warning alert-alt">
-                         <small>3 hours ago</small><br>
-                         <i class="fa fa-exclamation fa-fw"></i> Running low on space<br><strong>18GB in use</strong> 2GB left
-                     </div>
-                     <div class="alert alert-danger alert-alt">
-                         <small>Yesterday</small><br>
-                         <i class="fa fa-bug fa-fw"></i> <a href="javascript:void(0)"><strong>New bug submitted</strong></a>
-                     </div>
-                 </div> -->
+
                  <!-- END Sidebar Notifications -->
             </div>
             <!-- END Sidebar Content -->
         </div>
         <!-- END Wrapper for scrolling functionality -->
     </div>
+
+    <script type="text/javascript">
+
+        var str= window.location.href;
+        var res= str.replace("http://localhost:3000","");
+        console.log(res);
+            if(res =='/manager/profile'){
+            document.getElementById('profile').className='active';
+        }
+        if(res =='/manager'){
+            document.getElementById('dashboard').className='active';
+        }
+        if(res =='/manager/changepwd'){
+            document.getElementById('changePassword').className='active';
+        }
+
+    </script>
     <!-- END Main Sidebar -->
 
     <!-- Main Container -->
@@ -334,7 +281,111 @@
                 'header-fixed-bottom'   has to be added on #page-container only if the class 'navbar-fixed-bottom' was added
 
         <!-- END Header -->
+        <header class="navbar navbar-inverse">
+            <!-- Left Header Navigation -->
+            <ul class="nav navbar-nav-custom">
+                <!-- Main Sidebar Toggle Button -->
+                <li>
+                    <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar');">
+                        <i class="fa fa-bars fa-fw"></i>
+                    </a>
+                </li>
+                <!-- END Main Sidebar Toggle Button -->
 
+                <!-- Template Options -->
+                <!-- Change Options functionality can be found in js/app.js - templateOptions() -->
+                <!-- <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="gi gi-settings"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-custom dropdown-options">
+                        <li class="dropdown-header text-center">Header Style</li>
+                        <li>
+                            <div class="btn-group btn-group-justified btn-group-sm">
+                                <a href="javascript:void(0)" class="btn btn-primary" id="options-header-default">Light</a>
+                                <a href="javascript:void(0)" class="btn btn-primary" id="options-header-inverse">Dark</a>
+                            </div>
+                        </li>
+                        <li class="dropdown-header text-center">Page Style</li>
+                        <li>
+                            <div class="btn-group btn-group-justified btn-group-sm">
+                                <a href="javascript:void(0)" class="btn btn-primary" id="options-main-style">Default</a>
+                                <a href="javascript:void(0)" class="btn btn-primary" id="options-main-style-alt">Alternative</a>
+                            </div>
+                        </li>
+                        <li class="dropdown-header text-center">Main Layout</li>
+                        <li>
+                            <button class="btn btn-sm btn-block btn-primary" id="options-header-top">Fixed Side/Header (Top)</button>
+                            <button class="btn btn-sm btn-block btn-primary" id="options-header-bottom">Fixed Side/Header (Bottom)</button>
+                        </li>
+                        <li class="dropdown-header text-center">Footer</li>
+                        <li>
+                            <div class="btn-group btn-group-justified btn-group-sm">
+                                <a href="javascript:void(0)" class="btn btn-primary" id="options-footer-static">Default</a>
+                                <a href="javascript:void(0)" class="btn btn-primary" id="options-footer-fixed">Fixed</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>-->
+                <!-- END Template Options -->
+            </ul>
+            <!-- END Left Header Navigation -->
+
+            <!-- Search Form -->
+            <!--  <form action="page_ready_search_results.html" method="post" class="navbar-form-custom" role="search">
+                 <div class="form-group">
+                     <input type="text" id="top-search" name="top-search" class="form-control" placeholder="Search..">
+                 </div>
+             </form>-->
+            <!-- END Search Form -->
+
+            <!-- Right Header Navigation -->
+            <!--    <ul class="nav navbar-nav-custom pull-right">
+                   <!-- Alternative Sidebar Toggle Button -->
+                <!--    <li>
+                        <!-- If you do not want the main sidebar to open when the alternative sidebar is closed, just remove the second parameter: App.sidebar('toggle-sidebar-alt');
+                    <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar-alt', 'toggle-other');">
+                        <i class="gi gi-share_alt"></i>
+                        <span class="label label-primary label-indicator animation-floating">4</span>
+                    </a>
+                </li>-->
+                <!-- END Alternative Sidebar Toggle Button -->
+
+                <!-- User Dropdown -->
+            <!--  <li class="dropdown">
+               <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                   <img src="img/placeholders/avatars/avatar2.jpg" alt="avatar"> <i class="fa fa-angle-down"></i>
+               </a>
+               <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                   <li class="dropdown-header text-center">Account</li>
+                   <li>
+
+                       <a href="page_ready_faq.html"><i class="fa fa-question fa-fw pull-right"></i>
+                           <span class="badge pull-right"></span>
+                           FAQ
+                       </a>
+                   </li>
+                   <li class="divider"></li>
+                   <li>
+                       <a href="page_ready_user_profile.html">
+                           <i class="fa fa-user fa-fw pull-right"></i>
+                           Profile
+                       </a>
+
+                   </li>
+                   <li class="divider"></li>
+                   <li>
+
+                       <a href="/logout"><i class="fa fa-ban fa-fw pull-right"></i> Logout</a>
+                   </li>
+
+
+               </ul>
+           </li> -->
+
+
+            <!-- END Right Header Navigation -->
+        </header>
         <!-- Page content -->
         <div id="page-content" style="min-height: 894px;">
             <%- body %>
