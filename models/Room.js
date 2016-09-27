@@ -12,6 +12,10 @@ module.exports = function(sequelize, DataTypes) {
         description : DataTypes.STRING,
         bed_number :DataTypes.INTEGER,
         lock_id : DataTypes.INTEGER
+      /*  disponibility:{
+            type: DataTypes.BOOLEAN,
+            defaultValue: true
+        }*/
     }, {timestamps: true});
 
     return room;

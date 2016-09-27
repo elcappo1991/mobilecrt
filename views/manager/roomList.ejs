@@ -1,0 +1,78 @@
+
+<% layout('../templates/layout')%>
+
+
+<script type="text/javascript" src="/javascripts/iso-3166-country-codes-angular.js"></script>
+<script type="text/javascript" src="/angular_app/angular_manager_app.js"></script>
+<div ng-app="Myapp" ng-controller="room">
+
+
+
+    <div class="row">
+
+        <div class="col-lg-4" ng-repeat="list in roomList">
+            <!-- Edit Contact Block -->
+            <div class="block">
+                <!-- Edit Contact Title -->
+                <div class="block-title">
+                    <div class="block-options pull-right">
+
+                    </div>
+                    <h2><i class="fa fa-ticket"></i> Room {{list.id}}</h2>
+                </div>
+                <!-- END Edit Contact Title -->
+
+                <!-- Edit Contact Content -->
+                <form action="" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
+
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label" for="edit-contact-name">Type</label>
+                        <div class="col-xs-9">
+                            <input id="edit-contact-name" name="edit-contact-name" class="form-control" value="{{list.type}}" placeholder="" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label" for="edit-contact-email">Description</label>
+                        <div class="col-xs-9">
+                            <input id="edit-contact-email" name="edit-contact-email" class="form-control" value="{{list.description}}" placeholder="" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label" for="edit-contact-phone">Capacity</label>
+                        <div class="col-xs-9">
+                            <input id="edit-contact-phone" name="edit-contact-phone" class="form-control" value="{{list.bed_number}}" placeholder="" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label" for="edit-contact-phone">lock</label>
+                        <div class="col-xs-9">
+                            <input id="edit-contact-phone" name="edit-contact-phone" class="form-control" value="{{list.lock_id}}" placeholder="" type="text">
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <div class="col-xs-12" >
+                            <input  class="btn btn-info" id="" name="button" class="form-control" value="Show details" placeholder="" type="button"  >
+                        </div>
+                    </div>
+
+                </form>
+                <!-- END Edit Contact Content -->
+            </div>
+
+        </div>
+
+
+
+
+    </div>
+
+
+</div>
+
+
+

@@ -12,8 +12,8 @@ var config = require('./../config/dbconfig.json');
  * @param res
  *
  */
-var addroom=function(room){
-
+var addroom=function(room,idManager){
+    room.managerId=idManager;
     models.room.create(room).then(function(){});
 };
 
@@ -33,11 +33,14 @@ var deleteroom=function(idroom,cb){
  * @param idroom
  * @param room
  */
-var updateroom=function(idroom,room){
-
-    models.room.findOne({where:{id:idroom}}).then(function(roomToUpdate){
-
-        roomToUpdate.update(room);
+var updateroom=function(idroom,room,cb){
+        console.log(idroom)
+    models.room.findOne({where:{
+        id:idroom
+                                }
+                        }).then(function(roomToUpdate){
+                console.log("**************"+roomToUpdate)
+        cb(roomToUpdate.update(room).then(function(){}))
     });
 
 }
@@ -60,7 +63,21 @@ var getAllroom=function(cb){
  */
 var getroomById=function(idroom,cb){
 
-    models.manager.findOne({where:{id: idroom}}).then(function(roomfound){
+    models.room.findOne({where:{id: idroom}}).then(function(roomfound){
+
+        return cb(roomfound.dataValues);
+    })
+
+}
+
+
+/**
+ * function that return a room by their id
+ * @param idManager
+ */
+var getroomByIdManager=function(idManager,cb){
+
+    models.room.findAll({where:{managerId: idManager}}).then(function(roomfound){
 
         return cb(roomfound);
     })
@@ -71,5 +88,6 @@ exports.addroom=addroom;
 exports.updateroom=updateroom;
 exports.getAllroom=getAllroom;
 exports.getoomById=getroomById;
+exports.getroomByIdManager=getroomByIdManager;
 
 

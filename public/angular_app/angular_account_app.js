@@ -12,6 +12,8 @@ myApp.controller('APPController', function($scope,$http) {
         $scope.listReservation=resultat.data;
 
     });
+
+
     /**
      * get  the user connected
      */
@@ -30,7 +32,10 @@ myApp.controller('APPController', function($scope,$http) {
 });
 myApp.controller('APPController1', function($scope,$http) {
 
-
+    $http.get('/account/roomList').then(function(room){
+        console.log(room.data)
+        $scope.roomList=room.data;
+    });
 });
 
 

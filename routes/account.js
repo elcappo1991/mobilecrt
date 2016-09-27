@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var reservationService =require('./../services/reservationService');
 var accountServices =require('./../services/accountService');
+var roomService =require('./../services/roomService');
 var pg = require('pg');
 //pg.defaults.ssl= true;;
 var config = require('./../config/dbconfig.json');
@@ -62,11 +63,17 @@ router.get('/getListReservation',isLoggedIn, function(req, res, next) {
  * web service that add a reservation
  */
 router.post('/addReservation',isLoggedIn,function(req,res){
-
+    console.log(req.body)
     reservationService.addreservation(req.body,req.user.id);
     res.redirect('/')
 
 })
+
+router.get('/roomList',isLoggedIn, function(req, res, next) {
+    roomService.getroomByIdManager(req.user.managerId,function(rows){
+        res.json(rows);
+    })
+});
 
 
 /**

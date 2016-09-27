@@ -1,0 +1,85 @@
+
+<% layout('../templates/layout')%>
+
+
+<script type="text/javascript" src="/javascripts/iso-3166-country-codes-angular.js"></script>
+<script type="text/javascript" src="/angular_app/angular_manager_app.js"></script>
+<div ng-app="app" ng-controller="homePage">
+
+   <div class="row">
+
+
+
+       <div class="content-float">
+
+
+           <div class="block">
+               <!-- Info Title -->
+               <div class="block-title">
+                   <div class="block-options pull-right">
+
+                   </div>
+                   <h2> <strong>  Add Room  </strong></h2>
+               </div>
+               <!-- END Info Title -->
+
+               <!-- Info Content -->
+               <form action="/manager/addRoom" method="post" class="form-horizontal form-bordered"  id="add">
+
+                   <div class="form-group">
+                       <div class="col-md-12">
+                           <div class="input-group">
+                               <input type="text" id="type" name="type" class="form-control " placeholder="Room type" required>
+                               <span class="input-group-addon"><i class="fa  fa-list"></i></span>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="form-group">
+                       <div class="col-md-12">
+                           <div class="input-group">
+                               <input type="text" id="description" name="description" class="form-control " placeholder="Description " required>
+                               <span class="input-group-addon"><i class=" fa fa-camera "></i></span>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="form-group">
+                       <div class="col-md-12">
+                           <div class="input-group">
+                               <input type="number" id="bed_number" name="bed_number" class="form-control " placeholder="Max person per room " required>
+                               <span class="input-group-addon"><i class=" fa fa-users "></i></span>
+                           </div>
+                       </div>
+                   </div>
+
+                   <div class="form-group">
+                       <div class="col-md-12">
+                           <div class="input-group">
+                               <input type="text" id="lock_id" name="lock_id" class="form-control " placeholder="Lock identification " required>
+                               <span class="input-group-addon"><i class=" fa fa-lock "></i></span>
+                           </div>
+                       </div>
+                   </div>
+
+
+                   <div class="form-group form-actions">
+                       <div class="col-xs-12">
+                           <button type="submit" class="btn btn-sm btn-default">Submit</button>
+                       </div>
+                   </div>
+               </form>
+               <!-- END Info Content -->
+           </div>
+
+
+       </div>
+
+
+   </div>
+
+
+
+
+</div>
+
+
+

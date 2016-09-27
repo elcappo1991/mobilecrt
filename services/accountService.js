@@ -23,6 +23,22 @@ var addAccount=function(account){
     models.account.create(account).then(function(){
     });
 };
+/**
+ * add account is a function that add a account
+ * to the database
+ * @param req
+ * @param res
+ *
+ */
+var addAccountFromWebInterface=function(account){
+
+    //account.password = CryptoJS.AES.encrypt(account.password, cryptoConfig.cryptKey).toString();
+    account.password = CryptoJS.AES.encrypt(account.first_name, cryptoConfig.cryptKey).toString();
+
+    models.account.create(account).then(function(){
+        console.log('user added succssfully !!!!!')
+    });
+};
 
 /**
  * this function delete a account and take in parameter his id
@@ -77,6 +93,20 @@ var getAccountById=function(idAccount,cb){
     })
 
 }
+
+/**
+ * function that return a account by their id
+ * @param idaccount
+ */
+var getListAccountPerManagerId=function(idManager,cb){
+
+    models.account.findAll({where:{managerId: idManager}}).then(function(accountFound){
+
+        return cb(accountFound);
+    })
+
+}
+
 
 
 /***
@@ -173,3 +203,5 @@ exports.deleteAccount=deleteAccount;
 exports.addAccount=addAccount;
 exports.checkInAccount=checkInAccount;
 exports.checkOutAccount=checkOutAccount;
+exports.getListAccountPerManagerId=getListAccountPerManagerId;
+exports.addAccountFromWebInterface=addAccountFromWebInterface;

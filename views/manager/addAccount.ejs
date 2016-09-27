@@ -1,0 +1,61 @@
+
+<% layout('../templates/layout')%>
+
+
+<script type="text/javascript" src="/javascripts/iso-3166-country-codes-angular.js"></script>
+<script type="text/javascript" src="/angular_app/angular_manager_app.js"></script>
+<div ng-app="Myapp" ng-controller="account">
+
+
+
+    <div class="row">
+        <div class="box">
+        <form action="/manager/addAccount" method="post" id="form-register" class="form-horizontal form-bordered ">
+            <div class="form-group">
+                <div class="col-xs-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="gi gi-user"></i></span>
+                        <input type="text" id="register-firstname" name="register-firstname" class="form-control input-lg" placeholder="Firstname">
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <input type="text" id="register-lastname" name="register-lastname" class="form-control input-lg" placeholder="Lastname">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="gi gi-envelope"></i></span>
+                        <input type="text" id="register-email" name="register-email" class="form-control input-lg" placeholder="Email">
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                        <input type="test" id="register-address" name="register-address" class="form-control input-lg" placeholder="address">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group form-actions">
+                <div class="col-xs-6">
+
+                </div>
+                <div class="col-xs-6 text-right">
+                    <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Register Account</button>
+                </div>
+            </div>
+
+        </form>
+        <div>
+        </div>
+
+</div>
+
+
+
+
+        </div>
+    </div>

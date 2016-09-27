@@ -1,0 +1,125 @@
+
+<% layout('../templates/layout')%>
+
+
+<script type="text/javascript" src="/javascripts/iso-3166-country-codes-angular.js"></script>
+
+<script type="text/javascript" src="/angular_app/angular_manager_app.js"></script>
+<div ng-app="Myapp" ng-controller="account">
+
+
+
+    <div class="row">
+
+  <!--      <div class="col-lg-4" ng-repeat="account in accountList">
+
+            <div class="block">
+
+                <div class="block-title">
+                    <div class="block-options pull-right">
+
+                    </div>
+                    <h2><i class="fa fa-ticket"></i>  {{account.first_name}} {{account.last_name}}</h2>
+                </div>
+
+                <form action="" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
+
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label" for="edit-contact-name">email</label>
+                        <div class="col-xs-9">
+                            <input id="edit-contact-name" name="edit-contact-name" class="form-control" value="{{account.email}}" placeholder="" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label" for="edit-contact-email">created At</label>
+                        <div class="col-xs-9">
+                            <input id="edit-contact-email" name="edit-contact-email" class="form-control" value="{{account.createdAt | date :  'fullDate'}}" placeholder="" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label" for="edit-contact-email">address</label>
+                        <div class="col-xs-9">
+                            <input id="edit-contact-email" name="edit-contact-email" class="form-control" value="{{account.address  }}" placeholder="" type="text">
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+
+                        <div class="col-xs-12" >
+                            <input  class="btn btn-info" id="" name="button" class="form-control" value="Show details" placeholder="" type="button"  >
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>-->
+
+
+    <!--    <div class="block full">
+            <div class="block-title">
+                <h2><strong>List Accounts</strong> </h2>
+            </div>
+
+            <div class="table-responsive">
+           <table  id="example" class="table table-vcenter table-condensed table-bordered dataTable" >
+                        <thead>
+                        <tr role="row">
+                            <th >ID</th>
+                            <th >Email</th>
+                            <th>Address</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr role="row" class="odd" ng-repeat="account in accountList">
+                            <td >{{account.id}}</td>
+                            <td><a href="javascript:void(0)">{{account.email}}</a></td>
+                            <td>{{account.address}}</td>
+
+                            <td class="text-center">
+                                <div class="btn-group">
+                                    <a href="javascript:void(0)" data-toggle="tooltip" title="" class="btn btn-xs btn-default" data-original-title="Edit"><i class="fa fa-pencil"></i></a>
+                                    <a href="javascript:void(0)" data-toggle="tooltip" title="" class="btn btn-xs btn-danger" data-original-title="Delete"><i class="fa fa-times"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                      </tbody>
+                    </table>
+            </div>
+        </div>
+
+    </div>-->
+    <table datatable="ng" class="table table-vcenter table-striped   table-condensed table-bordered dataTable no-footer">
+        <thead>
+        <tr >
+            <th>
+                ID
+            </th>
+            <th>FULL NAME</th>
+            <th>EMAIL</th>
+            <th>Address</th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="account in accountList">
+            <td class="text-center">{{account.id}}</td>
+            <td class="text-center">{{account.first_name}} {{account.last_name}}</td>
+            <td class="text-center"> <a href="javascript:void(0)">{{account.email}}</a></td>
+
+            <td class="text-center">{{account.address}}</td>
+
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+</div>
+<script>
+    $(function(){ TablesDatatables.init(); });
+    </script>
