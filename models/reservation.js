@@ -17,6 +17,12 @@ module.exports = function(sequelize, DataTypes) {
             type:DataTypes.BOOLEAN,
             defaultValue: false
         } ,
+
+
+        checkin_date: DataTypes.DATE,
+        checkout_date: DataTypes.DATE,
+        checkin: DataTypes.BOOLEAN,
+        checkout: DataTypes.BOOLEAN,
         room_number :DataTypes.INTEGER,
         lock_id : DataTypes.INTEGER
     }, {timestamps: true});

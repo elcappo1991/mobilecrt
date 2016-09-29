@@ -21,12 +21,10 @@ module.exports = function(sequelize, DataTypes) {
         app_info : DataTypes.STRING,
         locale : DataTypes.STRING,
         mobile_id: DataTypes.STRING,
-        checkin_date: DataTypes.DATE,
-        checkout_date: DataTypes.DATE,
-        checkin: DataTypes.BOOLEAN,
+
         is_mobile_user: DataTypes.BOOLEAN,
         is_card_user: DataTypes.BOOLEAN,
-        checkout: DataTypes.BOOLEAN,
+
         num_passport: DataTypes.STRING,
         fidelity_point : DataTypes.INTEGER
 

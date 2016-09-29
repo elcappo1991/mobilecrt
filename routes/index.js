@@ -13,7 +13,13 @@ router.get('/',isLoggedIn,function(req, res, next) {
 
        res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
        res.redirect('/manager');
-   }else if(isLoggedIn){
+   }
+   else  if(req.user.role=="owner"){
+
+       res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
+       res.redirect('/owner');
+   }
+   else if(isLoggedIn){
        res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
        res.redirect('/account');
    }
@@ -65,10 +71,14 @@ router.post('/login',function(req, res, next) {
           else if(user.role=='admin'){
 
             return res.redirect('/admin');
-          }else
+          }else if(user.role=='manager')
           {
             return res.redirect('/manager');
-          }
+          }else {
+                return res.redirect('/owner');
+
+            }
+
 
         });
 

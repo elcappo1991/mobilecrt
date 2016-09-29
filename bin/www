@@ -21,6 +21,7 @@ var options = {
 //console.log('tables created');
 //models.manager.create({first_name:'abesselm',last_name:'bousetta',password:"U2FsdGVkX19Upph/T+cWdbnxAFEfZAUPfGTU1n0MXko=",email:'admin@admin',role:'admin'});
 //models.manager.create({first_name:'wejd',last_name:'daghfous',password:"U2FsdGVkX19Upph/T+cWdbnxAFEfZAUPfGTU1n0MXko=",email:'wejd.daghfous@esprit.tn',role:'manager'});
+//models.manager.create({first_name:'dikha',last_name:'dikha',password:"U2FsdGVkX19Upph/T+cWdbnxAFEfZAUPfGTU1n0MXko=",email:'dikha@avempace.com',role:'owner'});
 //});
 /**
  * Get port from environment and store in Express.

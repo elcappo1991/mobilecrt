@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
         email: DataTypes.STRING,
         password: DataTypes.STRING,
         address : DataTypes.STRING,
-        role:{type: DataTypes.ENUM, values: ['admin', 'manager'], defaultValue: 'manager', allowNull: false}
+        role:{type: DataTypes.ENUM, values: ['admin', 'owner','manager'], defaultValue: 'manager', allowNull: false}
     }, {timestamps: true});
 
     return manager;

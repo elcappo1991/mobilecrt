@@ -6,7 +6,7 @@ var cryptoConfig = require('./../config/cryptConf.json');
 var pg = require('pg');
 //pg.defaults.ssl= true;
 var conString = config.App.dbConfig.conString;
-
+var hotelService = require('./hotelService')
 
 /**
  * add user is a function that add a user
@@ -193,6 +193,42 @@ var getListLockByIdManager=function(idManager){
 
 
 
+
+var getListManagerByIdOwners = function(idOwner,cb){
+
+    hotelService.gethotelByIdManager(idOwner,function(result){
+        var managerList = [];
+        var j =0;
+
+        for(i=0;i<result.length;i++){
+
+            models.manager.findAll({where:{hotelId: result[i].id}}).then(function(managerFound){
+
+                managerList = managerList.concat(managerFound);
+                if(i == (result.length)){
+
+                    j++;
+                    if(j==i ){
+
+                     cb(managerList)
+                    }
+
+
+
+                }
+            });
+
+
+        }
+
+
+
+
+
+    })
+
+}
+
 exports.deleteUser=deleteUser;
 exports.addUser=addUser;
 exports.updateUser=updateUser;
@@ -201,5 +237,6 @@ exports.getManagerById=getManagerById;
 exports.changePassword=changePassword;
 exports.getListAccountByIdManager=getListAccountByIdManager;
 exports.getListLockByIdManager=getListLockByIdManager;
+exports.getListManagerByIdOwners=getListManagerByIdOwners;
 
 

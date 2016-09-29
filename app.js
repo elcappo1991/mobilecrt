@@ -10,6 +10,7 @@ var routes = require('./routes/index');
 var manager = require('./routes/manager');
 var admin = require('./routes/admin');
 var account = require('./routes/account');
+var owner = require('./routes/owner');
 
 
 var  session= require('express-session');
@@ -82,6 +83,7 @@ app.use('/', routes);
 app.use('/manager', manager);
 app.use('/admin', admin);
 app.use('/account', account);
+app.use('/owner', owner);
 
 
 

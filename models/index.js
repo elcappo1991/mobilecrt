@@ -25,7 +25,11 @@ var models = [
     'event',
     'companion',
     'feedback',
-    'programmateur'
+    'programmateur',
+    'hotel',
+    'roomType',
+    'option',
+    'roomOption'
 
 ];
 /**
@@ -44,10 +48,10 @@ models.forEach(function(model) {
  */
 (function(m) {
 
-    m.account.belongsTo(m.manager);
+
     m.token.belongsTo(m.account);
     m.token.belongsTo(m.room);
-    m.room.belongsTo(m.manager);
+
     m.authorisation.belongsTo(m.manager);
     m.authorisation.belongsTo(m.token);
     m.authorisationLock.belongsTo(m.authorisation);
@@ -58,7 +62,15 @@ models.forEach(function(model) {
     m.programmateur.belongsTo(m.manager);
     m.event.belongsTo(m.room);
     m.room.belongsTo(m.reservation);
-   /* m.programmateur.belongsTo(m.user);
+
+    m.option.belongsTo(m.hotel);
+    m.roomType.belongsTo(m.hotel);
+    m.room.belongsTo(m.roomType);
+    m.reservation.belongsTo(m.manager);
+    m.manager.belongsTo(m.hotel)
+    m.roomOption.belongsTo(m.room);
+    m.roomOption.belongsTo(m.option);
+       /* m.programmateur.belongsTo(m.user);
     m.hall.belongsTo(m.residence);
     m.garage.hasMany(m.equipement);
     m.hall.hasMany(m.equipement);

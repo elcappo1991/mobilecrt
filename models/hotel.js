@@ -1,5 +1,5 @@
 module.exports = function(sequelize, DataTypes) {
-    var room = sequelize.define("rooms", {
+    var hotel = sequelize.define("hotels", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -8,16 +8,17 @@ module.exports = function(sequelize, DataTypes) {
             unique: true
         },
 
-
+        name: DataTypes.STRING,
         description : DataTypes.STRING,
-        bed_number :DataTypes.INTEGER,
-        lock_id : DataTypes.INTEGER,
-       disponibility:{
-            type: DataTypes.BOOLEAN,
-            defaultValue: true
-        },
+        capacity :DataTypes.INTEGER,
+
+        location: DataTypes.STRING,
+        longitude : DataTypes.FLOAT,
+        latitude : DataTypes.FLOAT,
+        owner_id: DataTypes.INTEGER,
+
         picture_url: DataTypes.STRING
     }, {timestamps: true});
 
-    return room;
+    return hotel;
 };
