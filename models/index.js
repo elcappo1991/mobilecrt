@@ -70,6 +70,7 @@ models.forEach(function(model) {
     m.manager.belongsTo(m.hotel)
     m.roomOption.belongsTo(m.room);
     m.roomOption.belongsTo(m.option);
+    m.room.belongsTo(m.hotel)
        /* m.programmateur.belongsTo(m.user);
     m.hall.belongsTo(m.residence);
     m.garage.hasMany(m.equipement);

@@ -3,6 +3,9 @@ var router = express.Router();
 var roomService =require('./../services/roomService');
 var reservationService =require('./../services/reservationService');
 var accountService =require('./../services/accountService');
+var managerService =require('./../services/managerService');
+var hotelService =require('./../services/hotelService');
+var roomTypeService =require('./../services/roomTypeService');
 var pg = require('pg');
 //pg.defaults.ssl= true;;
 var config = require('./../config/dbconfig.json');
@@ -13,7 +16,7 @@ router.get('/',isLoggedIn,requireRole('manager'), function(req, res, next) {
   res.render('manager/index');
 });
 
-router.get('/getUserConnected',isLoggedIn,requireRole('manager'),function(req,res){
+router.get('/getUserConnected',isLoggedIn,function(req,res){
 
   res.json(req.user);
 });
@@ -58,15 +61,22 @@ router.get('/addAccount',isLoggedIn,requireRole('manager'), function(req, res, n
   res.render('manager/addAccount');
 });
 
+
+router.get('/roomType',isLoggedIn,requireRole('manager'), function(req, res, next) {
+  res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
+  res.render('manager/roomType');
+});
+
 router.post('/addRoom',isLoggedIn,requireRole('manager'), function(req, res, next) {
-  roomService.addroom(req.body,req.user.id);
+
+  roomService.addroom(req.body,req.user.hotelId);
   res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
   res.render('manager/index')
 });
 
 
 router.get('/getRoomList',isLoggedIn,requireRole('manager'), function(req, res, next) {
-roomService.getroomByIdManager(req.user.id,function(rows){
+roomService.getroomByIdHotel(req.user.hotelId,function(rows){
   res.json(rows);
 })
 });
@@ -81,6 +91,13 @@ router.get('/getReservationListByIdAccount',isLoggedIn,requireRole('manager'), f
   //  console.log("result is "+ JSON.stringify(rows))
     res.json(JSON.stringify(rows));
   })
+});
+
+router.get('/getHotelById',requireRole('manager'),isLoggedIn, function(req,res){
+  hotelService.gethotelById(req.user.hotelId, function(hotel){
+    res.json(hotel);
+  })
+
 });
 
 router.get('/getListAccountPerManagerId',isLoggedIn,requireRole('manager'), function(req, res, next) {
@@ -161,6 +178,64 @@ router.post('/register', function(req, res, next) {
     ok
 });
 });
+
+/***
+ *
+ * upload image section
+ * @type {exports}
+ */
+var  cloudinary = require('cloudinary');
+var fs = require('fs');
+var multer  = require('multer')
+var upload = multer({ dest: 'uploads/' });
+cloudinary.config({ cloud_name: 'dvsfc8qz2', api_key: '835615685611319', api_secret: '2DzasRC3aTVDTOoZq13IcgEx0iY' });
+
+router.post('/upload',upload.single('image'), function(req, res){
+  if(req.file != undefined){
+  var imageStream = fs.createReadStream(req.file.path);
+
+  var cloudStream = cloudinary.uploader.upload_stream(function(result) {
+    req.body.picture_url=result.url;
+    roomTypeService.addroomType(req.body,req.user.hotelId)
+    res.redirect('/manager/roomType');
+  });
+
+  imageStream.on('data', cloudStream.write).on('end', cloudStream.end);
+  }else{
+    req.body.picture_url="http://res.cloudinary.com/dvsfc8qz2/image/upload/v1475316049/gblgablh9etjq45kiefm.jpg"
+    roomTypeService.addroomType(req.body,req.user.hotelId);
+    res.redirect('/manager/roomType');  }
+});
+
+
+router.post('/addRoomWithImage',upload.single('image'), function(req, res){
+  if(req.file != undefined) {
+    var imageStream = fs.createReadStream(req.file.path);
+
+    var cloudStream = cloudinary.uploader.upload_stream(function (result) {
+      req.body.picture_url = result.url;
+      roomService.addroom(req.body, req.user.hotelId);
+      res.redirect('/manager/roomList');
+    });
+
+    imageStream.on('data', cloudStream.write).on('end', cloudStream.end);
+  }else{
+    roomService.addroom(req.body, req.user.hotelId);
+    res.redirect('/manager/roomList')
+  }
+});
+
+router.get('/getRoomType',requireRole('manager'),isLoggedIn,function(req,res){
+  roomTypeService.getroomTypeByIdHotel(req.user.hotelId,function(result){
+
+    res.json(result)
+  })
+});
+
+
+
+
+
 
 
 //verifiy if user is connected or not

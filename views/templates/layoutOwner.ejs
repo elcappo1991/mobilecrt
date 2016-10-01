@@ -82,7 +82,7 @@
                     </div>
                     <div class="sidebar-user-name"> <% if(user) { %> <%=user%> <% } %></div>
                     <div class="sidebar-user-links">
-                        <a href="page_ready_user_profile.html" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>
+                        <a href="/owner/profile" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>
 
                         <a href="/logout" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="gi gi-exit"></i></a>
                     </div>
@@ -131,10 +131,11 @@
                         <span class="sidebar-header-title">Profile Management</span>
                     </li>
                     <li>
-                        <a href="page_widgets_stats.html"><i class="gi gi-charts sidebar-nav-icon"></i>Profile</a>
+                        <a href="/owner/profile"><i class="gi gi-charts sidebar-nav-icon"></i>Profile</a>
                     </li>
                     <li>
-                        <a href="page_widgets_social.html"><i class="gi gi-share_alt sidebar-nav-icon"></i>Change Password</a>
+                        <a href="/owner/changepwd"><i class="gi gi-asterisk sidebar-nav-icon"></i>Change Password</a>
+
                     </li>
 
                     <li class="sidebar-header">
@@ -142,17 +143,22 @@
                         <span class="sidebar-header-title">hotel Management</span>
                     </li>
                     <li>
-                        <a href="/owner/hotel"><i class="gi gi-share_alt sidebar-nav-icon"></i> Hotel List</a>
+                        <a href="/owner/hotel"><i class="gi gi-justify sidebar-nav-icon"></i> Hotel List</a>
                     </li>
                     <li>
-                        <a href="/owner/addHotel"><i class="gi gi-share_alt sidebar-nav-icon"></i>Add Hotel</a>
+                        <a href="/owner/addHotel"><i class="gi gi-hospital sidebar-nav-icon"></i>Add Hotel</a>
+                    </li>
+
+                    <li class="sidebar-header">
+                        <span class="sidebar-header-title">Manager Management</span>
                     </li>
                     <li>
-                        <a href="/owner/addManager"><i class="gi gi-share_alt sidebar-nav-icon"></i>Add New Manager</a>
+                        <a href="/owner/listManager"><i class="gi gi-justify sidebar-nav-icon"></i>Manager List</a>
+                    </li>
+                    <li>
+                        <a href="/owner/addManager"><i class="gi gi-user_add sidebar-nav-icon"></i>Add New Manager</a>
                         </li>
-                    <li>
-                        <a href="/owner/listManager"><i class="gi gi-share_alt sidebar-nav-icon"></i>Manager List</a>
-                    </li>
+
 
                 </ul>
                 <!-- END Sidebar Navigation -->

@@ -91,7 +91,7 @@ exports.deletehotel=deletehotel;
 exports.addhotel=addhotel;
 exports.updatehotel=updatehotel;
 exports.getAllhotel=getAllhotel;
-exports.getoomById=gethotelById;
+exports.gethotelById=gethotelById;
 exports.gethotelByIdManager=gethotelByIdManager;
 
 

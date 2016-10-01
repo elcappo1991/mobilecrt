@@ -8,14 +8,23 @@ app.controller('homePage', function($scope,$http,$window) {
 
         $scope.user_info=user.data;
     });
+    $http.get('/manager/getHotelById').then(function(hotel){
+            console.log(hotel)
+        $scope.hotel_info=hotel.data;
+    });
+    $http.get('/manager/getRoomType').then(function(hotel){
+
+        $scope.roomType=hotel.data;
+    });
+
 
 
     $http.get("http://ipinfo.io").then(function(response) {
-        console.log(response)
+
        $scope.location= response.data.country;
     });
 
-    $http.get("/manager/getReservationListByIdAccount").then(function(reservationList){
+    /*$http.get("/manager/getReservationListByIdAccount").then(function(reservationList){
 
 
         $scope.reservationList=  JSON.parse(reservationList.data);
@@ -30,7 +39,7 @@ app.controller('homePage', function($scope,$http,$window) {
     });
     $scope.mfstDate = new Date().toISOString()  ;
     console.log($scope.mfstDate)
-
+*/
 
 
 
@@ -84,6 +93,12 @@ Myapp.controller('room', function($scope,$http) {
         console.log(room.data)
         $scope.roomList=room.data;
     });
+    $http.get('/manager/getRoomType').then(function(hotel){
+
+        $scope.roomType=hotel.data;
+    });
+
+
 
 });
 Myapp.controller('account', function($scope,$http) {

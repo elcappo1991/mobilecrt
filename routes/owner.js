@@ -7,6 +7,7 @@ var config = require('./../config/dbconfig.json');
 var conString = config.App.dbConfig.conString;
 var hotelService = require('../services/hotelService');
 var managerService = require('../services/managerService');
+var emailService = require('../services/emailServices');
 
 /* GET home page. */
 router.get('/',isLoggedIn,requireRole('owner'),function(req, res, next) {
@@ -22,6 +23,15 @@ router.get('/addHotel',isLoggedIn,requireRole('owner'),function(req,res){
     res.render('owner/addHotel');
 
 })
+router.get('/profile',isLoggedIn,requireRole('owner'), function(req, res, next) {
+    res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
+    res.render('owner/profile');
+});
+
+router.get('/changepwd',isLoggedIn,requireRole('owner'), function(req, res, next) {
+    res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
+    res.render('owner/changepwd');
+});
 
 router.post('/addHotel',isLoggedIn,requireRole('owner'),function(req,res){
 
@@ -91,6 +101,7 @@ router.post('/addManager', function(req, res, next) {
             }else{
 
                 managerService.addUser(user);
+                emailService.sendMailToManager(user,"New Account Created")
                 res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
                 res.redirect('/owner/hotel')
 

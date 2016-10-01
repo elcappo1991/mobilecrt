@@ -12,10 +12,10 @@ var config = require('./../config/dbconfig.json');
  * @param res
  *
  */
-var addroomType=function(roomType,idManager){
-    roomType.managerId=idManager;
-    models.roomType.create(roomType).then(function(){
-
+var addroomType=function(roomType,idhotel){
+    roomType.hotelId=idhotel;
+    models.roomType.create(roomType).then(function(result){
+    console.log(result)
     });
 };
 
@@ -77,9 +77,9 @@ var getroomTypeById=function(idroomType,cb){
  * function that return a roomType by their id
  * @param idManager
  */
-var getroomTypeByIdManager=function(idManager,cb){
+var getroomTypeByIdHotel=function(idHotel,cb){
 
-    models.roomType.findAll({where:{managerId: idManager}}).then(function(roomTypefound){
+    models.roomType.findAll({where:{hotelId: idHotel}}).then(function(roomTypefound){
 
         return cb(roomTypefound);
     })
@@ -90,6 +90,6 @@ exports.addroomType=addroomType;
 exports.updateroomType=updateroomType;
 exports.getAllroomType=getAllroomType;
 exports.getoomById=getroomTypeById;
-exports.getroomTypeByIdManager=getroomTypeByIdManager;
+exports.getroomTypeByIdHotel=getroomTypeByIdHotel;
 
 

@@ -89,6 +89,18 @@ app.use('/owner', owner);
 
 
 
+/***
+ * ***
+ *  image send to cdn
+ */
+var methodOverride =require('method-override')
+app.use(methodOverride());
+
+
+/**
+ * end upload image
+ * **/
+
 
 
 

@@ -10,25 +10,23 @@
 
     <div class="row">
 
-        <div class="col-lg-4" ng-repeat="list in roomList">
-            <!-- Edit Contact Block -->
+        <!--<div class="col-lg-4" ng-repeat="list in roomList">
+
             <div class="block">
-                <!-- Edit Contact Title -->
+
                 <div class="block-title">
                     <div class="block-options pull-right">
 
                     </div>
                     <h2><i class="fa fa-ticket"></i> Room {{list.id}}</h2>
                 </div>
-                <!-- END Edit Contact Title -->
 
-                <!-- Edit Contact Content -->
                 <form action="" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
 
                     <div class="form-group">
                         <label class="col-xs-3 control-label" for="edit-contact-name">Type</label>
-                        <div class="col-xs-9">
-                            <input id="edit-contact-name" name="edit-contact-name" class="form-control" value="{{list.type}}" placeholder="" type="text">
+                        <div class="col-xs-9" ng-repeat="type in roomOptions" ng-if="list.roomTypeId == type.id" >
+                            <input id="edit-contact-name" name="edit-contact-name" class="form-control" value="{{type.type}}" placeholder="" type="text">
                         </div>
                     </div>
                     <div class="form-group">
@@ -51,6 +49,14 @@
                         </div>
                     </div>
 
+                    <div class="form-group">
+
+                        <div class="col-xs-9">
+                            <img ng-src="{{list.picture_url}}" alt="background" class="widget-background animation-pulseSlow">
+                        </div>
+                    </div>
+
+
 
 
                     <div class="form-group">
@@ -61,18 +67,47 @@
                     </div>
 
                 </form>
-                <!-- END Edit Contact Content -->
+
             </div>
 
+        </div>-->
+
+
+
+
+
+        <div class="col-lg-4 col-md-6" ng-repeat="list in roomList">
+
+    <div class="widget" >
+        <div class="widget-simple" ng-repeat="type in roomType" ng-if="list.roomTypeId == type.id" >
+            <a href="javascript:void(0)" class="widget-icon pull-right themed-background">
+                <i class="gi gi-picture"></i>
+            </a>
+            <h4 class="widget-content">
+                <a href="javascript:void(0)"><strong>{{type.type}}</strong> </a>
+                <small> <a href="javascript:void(0)">{{list.description}}</a></small><strong> capacity :{{list.bed_number}}</strong>
+            </h4>
         </div>
+        <div class="widget-extra-full themed-background-dark">
+            <!-- Carousel -->
+                <!-- Wrapper for slides -->
+
+                    <div >
+                        <img ng-src="{{list.picture_url}}"  alt="image" width="320"  height="200">
+                    </div>
 
 
+                <!-- END Wrapper for slides -->
 
+                <!-- Controls -->
 
+                <!-- END Controls -->
+            </div>
+            <!-- END Carousel -->
+        </div>
     </div>
 
+</div>
+    </div>
 
 </div>
-
-
-

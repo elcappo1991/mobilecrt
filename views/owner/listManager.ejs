@@ -23,9 +23,9 @@
                 <form action="" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
 
                     <div class="form-group">
-                        <label class="col-xs-3 control-label" for="edit-contact-name">Name</label>
+                        <label class="col-xs-3 control-label" for="edit-contact-name">Hotel </label>
                         <div class="col-xs-9"  ng-repeat="hotel in hotelList">
-                            <input id="edit-contact-name" name="edit-contact-name" ng-if="hotel.id == list.hotelId" class="form-control" value="{{hotel.name}}" placeholder="" type="text">
+                            <input id="edit-contact-name" name="edit-contact-name" ng-if="hotel.id == list.hotelId" class="form-control" value="{{hotel.name}}" placeholder="" type="text" readonly>
                         </div>
                     </div>
 

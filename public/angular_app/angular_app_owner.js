@@ -39,3 +39,37 @@ myApp.controller('APPController1', function($scope,$http) {
     }
 
 });
+
+
+myApp.controller('change', function($scope,$http) {
+
+
+    $http.get('/manager/getUserConnected').then(function(user){
+
+        $scope.user_info=user.data;
+    });
+
+    $http.get("http://ipinfo.io").then(function(response) {
+
+        $scope.location= response.data.country;
+    });
+
+
+});
+
+
+myApp.controller('profile', function($scope,$http) {
+
+
+    $http.get('/manager/getUserConnected').then(function(user){
+
+        $scope.user_info=user.data;
+    });
+
+    $http.get("http://ipinfo.io").then(function(response) {
+
+        $scope.location= response.data.country;
+    });
+
+});
+

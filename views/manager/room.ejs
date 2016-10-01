@@ -24,13 +24,15 @@
                <!-- END Info Title -->
 
                <!-- Info Content -->
-               <form action="/manager/addRoom" method="post" class="form-horizontal form-bordered"  id="add">
+               <form action="/manager/addRoomWithImage" method="post" class="form-horizontal form-bordered"  enctype="multipart/form-data" id="add">
+
 
                    <div class="form-group">
                        <div class="col-md-12">
-                           <div class="input-group">
-                               <input type="text" id="type" name="type" class="form-control " placeholder="Room type" required>
-                               <span class="input-group-addon"><i class="fa  fa-list"></i></span>
+                           <div><select id="roomTypeId" name="roomTypeId" class="form-control" size="1">
+                               <option >Please select room type</option>
+                               <option ng-repeat="roomType in roomType" value="{{roomType.id}}" > {{roomType.type}} </option>
+                           </select>
                            </div>
                        </div>
                    </div>
@@ -59,11 +61,19 @@
                            </div>
                        </div>
                    </div>
+                   <div class="form-group">
+                       <div class="col-md-12">
+                           <div class="input-group">
+                                    <input id="image" name="image" type="file">
+                       </div>
+                   </div>
+                       </div>
+
 
 
                    <div class="form-group form-actions">
                        <div class="col-xs-12">
-                           <button type="submit" class="btn btn-sm btn-default">Submit</button>
+                         <button type="submit" class="btn btn-sm btn-default">Submit</button>
                        </div>
                    </div>
                </form>
