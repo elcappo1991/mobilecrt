@@ -14,15 +14,83 @@ var options = {
   key: fs.readFileSync('config/key.pem'),
   cert: fs.readFileSync('config/cert.pem')
 };
+/**
+ * function init fills database rows
+ */
+var initSchema=function(){
+  models.manager.create({first_name:'abesselm',last_name:'bousetta',password:"U2FsdGVkX19Upph/T+cWdbnxAFEfZAUPfGTU1n0MXko=",email:'admin@admin',role:'admin'});
+  //models.manager.create({first_name:'wejd',last_name:'daghfous',password:"U2FsdGVkX19Upph/T+cWdbnxAFEfZAUPfGTU1n0MXko=",email:'wejd.daghfous@esprit.tn',role:'manager'});
+  models.manager.create({first_name:'dikha',last_name:'dikha',password:"U2FsdGVkX19Upph/T+cWdbnxAFEfZAUPfGTU1n0MXko=",email:'dikha@avempace.com',role:'owner'});
+  models.account.create({first_name:'el cappo',last_name:'del cappo',password:"U2FsdGVkX19Upph/T+cWdbnxAFEfZAUPfGTU1n0MXko=",email:'el.cappo@hotmail.fr'});
+  models.hotel.create({name:'khayam',description:'4*',location:"hammamet",longitude:10.6530698242187,latitude:36.4115695285772,owner_id:2,capacity:200});
+  models.hotel.create({name:'Aura Bay',description:'5*',location:"Zanzibar",longitude:36.4115695285772,latitude:-6.07404009506493,owner_id:2,capacity:265});
+  models.manager.create({first_name:'wejd',last_name:'daghfous',password:"U2FsdGVkX19Upph/T+cWdbnxAFEfZAUPfGTU1n0MXko=",email:'wejd@avempace.com',role:'manager',hotelId:1});
+  models.manager.create({first_name:'abdou',last_name:'kerkeni',password:"U2FsdGVkX19Upph/T+cWdbnxAFEfZAUPfGTU1n0MXko=",email:'abdou@avempace.com',role:'manager',hotelId:2});
+  models.option.create({description:'wifi',hotelId:1});
+  models.option.create({description:'sauna',hotelId:1});
+  models.option.create({description:'sea view',hotelId:1});
+  models.option.create({description:'mobile access',hotelId:1});
+  models.option.create({description:'private pool',hotelId:1});
+  models.option.create({description:'private pool',hotelId:2});
+  models.option.create({description:'Wifi',hotelId:2});
+  models.option.create({description:'Free Parking',hotelId:2});
+  models.roomType.create({type:"Double Deluxe Room",description:'double',picture_url:"http://res.cloudinary.com/dm8y7k1tj/image/upload/v1475745360/il1hoa4qcvhckspncocu.jpg",hotelId:1});
+  models.roomType.create({type:"Junior Suit",description:'junior ',picture_url:"http://res.cloudinary.com/dm8y7k1tj/image/upload/v1475745360/il1hoa4qcvhckspncocu.jpg",hotelId:1});
+  models.roomType.create({type:"Royal Suit",description:'Royal ',picture_url:"http://res.cloudinary.com/dm8y7k1tj/image/upload/v1475745360/il1hoa4qcvhckspncocu.jpg",hotelId:1});
+  models.roomType.create({type:"Deluxe  Suit",description:'suit ',picture_url:"http://res.cloudinary.com/dm8y7k1tj/image/upload/v1475745360/il1hoa4qcvhckspncocu.jpg",hotelId:1});
+  models.roomType.create({type:"Deluxe  Suit",description:'suit ',picture_url:"http://res.cloudinary.com/dm8y7k1tj/image/upload/v1475745360/il1hoa4qcvhckspncocu.jpg",hotelId:2});
+  models.roomType.create({type:"Deluxe  Simple Room",description:'suit ',picture_url:"http://res.cloudinary.com/dm8y7k1tj/image/upload/v1475745360/il1hoa4qcvhckspncocu.jpg",hotelId:2});
+  models.roomType.create({type:"Presidence Suit",description:'suit ',picture_url:"http://res.cloudinary.com/dm8y7k1tj/image/upload/v1475745360/il1hoa4qcvhckspncocu.jpg",hotelId:2});
+  models.room.create({description:'Royal suit ',picture_url:"http://res.cloudinary.com/dm8y7k1tj/image/upload/v1475745492/nwdfhcrhwkmw49lexjxk.jpg",hotelId:1,lock_id:2512,bed_number:3,room_number:"A102",roomTypeId:2});
+  models.room.create({description:' suit ',picture_url:"http://res.cloudinary.com/dm8y7k1tj/image/upload/v1475745535/fwtp5sr7ltxajnmkfemn.jpg",hotelId:1,lock_id:3621,bed_number:2,room_number:"A103",roomTypeId:3});
+  models.room.create({description:' suit ',picture_url:"http://res.cloudinary.com/dm8y7k1tj/image/upload/v1475745586/zegbv4z5qnmquzk1vmlg.jpg",hotelId:1,lock_id:3821,bed_number:2,room_number:"A104",roomTypeId:4});
+  models.room.create({description:' suit ',picture_url:"http://res.cloudinary.com/dm8y7k1tj/image/upload/v1475745746/znbfbn6githahq1w1i6q.jpg",hotelId:2,lock_id:3820,bed_number:2,room_number:"C104",roomTypeId:6});
+  models.room.create({description:' suit ',picture_url:"http://res.cloudinary.com/dm8y7k1tj/image/upload/v1475745912/ozd1eja63c3eanty43gh.jpg",hotelId:2,lock_id:3860,bed_number:2,room_number:"C105",roomTypeId:7});
+  models.roomOption.create({roomId:1,optionId:1});
+  models.roomOption.create({roomId:1,optionId:3});
+  models.roomOption.create({roomId:1,optionId:4});
+  models.roomOption.create({roomId:2,optionId:1});
+  models.roomOption.create({roomId:2,optionId:3});
+  models.roomOption.create({roomId:3,optionId:1});
+  models.roomOption.create({roomId:3,optionId:4});
+  models.roomOption.create({roomId:3,optionId:2});
+  models.roomOption.create({roomId:4,optionId:2});
+  models.roomOption.create({roomId:4,optionId:6});
+  models.roomOption.create({roomId:4,optionId:7});
+  models.roomOption.create({roomId:5,optionId:8});
+  models.roomOption.create({roomId:5,optionId:6});
+
+}
+
+var lunchDatabaseCreationForce= function(){
+  models.sequelize.sync({ force: true }).then(function () { // in case we need to reload database config
+    console.log('tables created');
+
+  initSchema();
+  console.log('rows created');
+
+});
+}
+var lunchDatabaseCreationSoft=function(){
+
+models.sequelize.sync().then(function () {
+console.log('tables created');
+
+  initSchema();
+  console.log('rows created');
+
+});
+}
 
 
-//models.sequelize.sync({ force: true }).then(function () { // in case we need to reload database config
-//models.sequelize.sync().then(function () {
-//console.log('tables created');
-//models.manager.create({first_name:'abesselm',last_name:'bousetta',password:"U2FsdGVkX19Upph/T+cWdbnxAFEfZAUPfGTU1n0MXko=",email:'admin@admin',role:'admin'});
-//models.manager.create({first_name:'wejd',last_name:'daghfous',password:"U2FsdGVkX19Upph/T+cWdbnxAFEfZAUPfGTU1n0MXko=",email:'wejd.daghfous@esprit.tn',role:'manager'});
-//models.manager.create({first_name:'dikha',last_name:'dikha',password:"U2FsdGVkX19Upph/T+cWdbnxAFEfZAUPfGTU1n0MXko=",email:'dikha@avempace.com',role:'owner'});
-//});
+/**
+ * uncomment lunchDatabaseCreationForce in case there is modification in database schema
+ * uncomment lunchDatabaseCreationSoft in case you want to delete rows in database and fill it with rows in init schema function
+ */
+//lunchDatabaseCreationForce();
+//lunchDatabaseCreationSoft();
+
+
 /**
  * Get port from environment and store in Express.
  */
@@ -103,5 +171,6 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
+  console.log(" Lisening on "+bind)
   debug('Listening on ' + bind);
 }

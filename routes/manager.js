@@ -6,6 +6,8 @@ var accountService =require('./../services/accountService');
 var managerService =require('./../services/managerService');
 var hotelService =require('./../services/hotelService');
 var roomTypeService =require('./../services/roomTypeService');
+var optionService =require('./../services/optionService');
+var roomOptionService =require('./../services/roomOptionService');
 var pg = require('pg');
 //pg.defaults.ssl= true;;
 var config = require('./../config/dbconfig.json');
@@ -67,6 +69,12 @@ router.get('/roomType',isLoggedIn,requireRole('manager'), function(req, res, nex
   res.render('manager/roomType');
 });
 
+router.get('/option',isLoggedIn,requireRole('manager'), function(req, res, next) {
+  res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
+  res.render('manager/option');
+});
+
+
 router.post('/addRoom',isLoggedIn,requireRole('manager'), function(req, res, next) {
 
   roomService.addroom(req.body,req.user.hotelId);
@@ -100,12 +108,28 @@ router.get('/getHotelById',requireRole('manager'),isLoggedIn, function(req,res){
 
 });
 
-router.get('/getListAccountPerManagerId',isLoggedIn,requireRole('manager'), function(req, res, next) {
+router.get('/getreservationForTheManager',isLoggedIn,requireRole('manager'), function(req, res, next) {
 
-accountService.getListAccountPerManagerId(req.user.id,function(rows){
-  res.json(rows);
-})
+  reservationService.getreservationForTheManager(req.user.hotelId,function(rows){
+    res.json(rows);
+  })
 });
+router.get('/getHistoricReservation',isLoggedIn,requireRole('manager'), function(req, res, next) {
+
+  reservationService.getHistriquereservationForTheManager(req.user.hotelId,function(rows){
+    res.json(rows);
+  })
+});
+
+router.get('/getListAccountPerHotel',isLoggedIn,requireRole('manager'), function(req, res, next) {
+
+  accountService.getListAccountPerHotel(req.user.hotelId,function(rows){
+
+    res.json(rows);
+  })
+});
+
+
 router.post('/addAccount', function(req, res, next) {
 
   var user={
@@ -188,7 +212,7 @@ var  cloudinary = require('cloudinary');
 var fs = require('fs');
 var multer  = require('multer')
 var upload = multer({ dest: 'uploads/' });
-cloudinary.config({ cloud_name: 'dvsfc8qz2', api_key: '835615685611319', api_secret: '2DzasRC3aTVDTOoZq13IcgEx0iY' });
+cloudinary.config({ cloud_name: 'dm8y7k1tj', api_key: '914538314322415', api_secret: '8DEquNPP7Fvl-AtMO_VJW3V1_a0' });
 
 router.post('/upload',upload.single('image'), function(req, res){
   if(req.file != undefined){
@@ -214,14 +238,31 @@ router.post('/addRoomWithImage',upload.single('image'), function(req, res){
 
     var cloudStream = cloudinary.uploader.upload_stream(function (result) {
       req.body.picture_url = result.url;
-      roomService.addroom(req.body, req.user.hotelId);
-      res.redirect('/manager/roomList');
-    });
+      roomService.addroom(req.body, req.user.hotelId,function(room){
 
+        var tab=req.body.optionValues.split(",");
+        tab.forEach(function(val){
+          roomOptionService.addroomOption(room.id,val);
+
+        })
+
+      });
+    });
     imageStream.on('data', cloudStream.write).on('end', cloudStream.end);
+    setTimeout(function(){  res.redirect('/manager/roomList')},3000)
+
+
   }else{
-    roomService.addroom(req.body, req.user.hotelId);
-    res.redirect('/manager/roomList')
+
+    roomService.addroom(req.body, req.user.hotelId,function(room){
+
+    var tab=req.body.optionValues.split(",");
+    tab.forEach(function(val){
+      roomOptionService.addroomOption(room.id,val);
+      res.redirect('/manager/roomList')
+    })
+
+    });
   }
 });
 
@@ -233,10 +274,26 @@ router.get('/getRoomType',requireRole('manager'),isLoggedIn,function(req,res){
 });
 
 
+router.post('/addOption',isLoggedIn,requireRole('manager'),function(req,res){
+  console.log(req)
+  optionService.addoption(req.body,req.user.hotelId);
+  res.redirect('/manager/option')
 
+})
 
+router.get('/getOption',isLoggedIn,requireRole("manager"), function(req,res){
 
+  optionService.getoptionByIdHotel(req.user.hotelId,function(resultat){
+    res.json(resultat);
+  })
+})
 
+router.get('/getAllRoomOption',isLoggedIn,requireRole("manager"), function(req,res){
+
+  roomOptionService.getAllroomOption(function(resultat){
+    res.json(resultat);
+  })
+})
 
 //verifiy if user is connected or not
 function isLoggedIn(req, res, next) {

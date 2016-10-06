@@ -23,8 +23,9 @@ module.exports = function(sequelize, DataTypes) {
         checkout_date: DataTypes.DATE,
         checkin: DataTypes.BOOLEAN,
         checkout: DataTypes.BOOLEAN,
-        room_number :DataTypes.INTEGER,
-        lock_id : DataTypes.INTEGER
+        companion_nb :DataTypes.INTEGER,
+        room_nb :DataTypes.INTEGER,
+        hotel_id : DataTypes.INTEGER
     }, {timestamps: true});
 
     return reservation;

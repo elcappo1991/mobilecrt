@@ -21,7 +21,7 @@
     </div>
 
 
-<div class="row">
+<div class="row" ng-cloak>
     <div class="col-lg-4" ng-repeat="list in listReservation">
         <!-- Edit Contact Block -->
         <div class="block">
@@ -30,7 +30,7 @@
                 <div class="block-options pull-right">
 
                 </div>
-                <h2><i class="fa fa-ticket"></i> reservation {{list.id}}</h2>
+                <h2><i class="fa fa-ticket"></i> reservation     <a>{{list.ref}}</a> </h2>
             </div>
             <!-- END Edit Contact Title -->
 
@@ -38,15 +38,27 @@
             <form action="" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
 
                 <div class="form-group">
-                    <label class="col-xs-3 control-label" for="edit-contact-name">reference</label>
+                    <label class="col-xs-3 control-label" for="edit-contact-name">Hotel</label>
                     <div class="col-xs-9">
-                        <input id="edit-contact-name" name="edit-contact-name" class="form-control" value="{{list.ref}}" placeholder="" type="text">
+                        <input id="edit-contact-name" name="edit-contact-name" ng-repeat="hotel in hotels" ng-if="hotel.id == list.hotel_id" class="form-control" value="{{hotel.name}}" placeholder="" type="text">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label" for="edit-contact-email">room type</label>
+                    <label class="col-xs-3 control-label" for="edit-contact-email">Location</label>
+                    <div class="col-xs-9">
+                        <input id="edit-contact-email" name="edit-contact-email" class="form-control"ng-repeat="hotel in hotels" ng-if="hotel.id == list.hotel_id" value="{{hotel.location}}" placeholder="" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" for="edit-contact-email">Room type</label>
                     <div class="col-xs-9">
                         <input id="edit-contact-email" name="edit-contact-email" class="form-control" value="{{list.type_room}}" placeholder="" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" for="edit-contact-email">Booked Room</label>
+                    <div class="col-xs-9">
+                        <input id="edit-contact-email" name="edit-contact-email" class="form-control" value="{{list.room_nb}}" placeholder="" type="text">
                     </div>
                 </div>
                 <div class="form-group">
@@ -56,13 +68,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label" for="edit-contact-phone">start date</label>
+                    <label class="col-xs-3 control-label" for="edit-contact-phone">Start date</label>
                     <div class="col-xs-9">
                         <input id="edit-contact-phone" name="edit-contact-phone" class="form-control" value="{{list.start_date | date :  'fullDate'}}" placeholder="" type="text">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-xs-3 control-label" for="edit-contact-phone">end date</label>
+                    <label class="col-xs-3 control-label" for="edit-contact-phone">End date</label>
                     <div class="col-xs-9">
                         <input id="edit-contact-phone" name="edit-contact-phone" class="form-control" value="{{list.end_date | date :  'fullDate' }}" placeholder="" type="text">
                     </div>

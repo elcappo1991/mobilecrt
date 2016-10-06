@@ -6,7 +6,7 @@
 <script type="text/javascript" src="/angular_app/angular_manager_app.js"></script>
 <div ng-app="app" ng-controller="homePage">
 
-    <div class="content-header content-header-media">
+    <div class="content-header content-header-media" >
         <div class="header-section">
             <div class="row">
                 <!-- Main Title (hidden on small devices for the statistics to fit) -->
@@ -55,9 +55,63 @@
 
     <div class="row">
 
+        <div class="col-lg-4" ng-repeat="list in reservation">
+            <!-- Edit Contact Block -->
+            <div class="block">
+                <!-- Edit Contact Title -->
+                <div class="block-title">
+                    <div class="block-options pull-right">
 
+                    </div>
+                    <h2><i class="fa fa-ticket"></i> reservation     <a>{{list.ref}}</a> </h2>
+                </div>
+                <!-- END Edit Contact Title -->
 
+                <!-- Edit Contact Content -->
+                <form action="" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
 
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label" for="edit-contact-email">Room type</label>
+                        <div class="col-xs-9">
+                            <input id="edit-contact-email" name="edit-contact-email" class="form-control" value="{{list.type_room}}" placeholder="" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label" for="edit-contact-email">Booked Room</label>
+                        <div class="col-xs-9">
+                            <input id="edit-contact-email" name="edit-contact-email" class="form-control" value="{{list.room_nb}}" placeholder="" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label" for="edit-contact-phone">Room option</label>
+                        <div class="col-xs-9">
+                            <input id="edit-contact-phone" name="edit-contact-phone" class="form-control" value="{{list.option_room}}" placeholder="" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label" for="edit-contact-phone">Start date</label>
+                        <div class="col-xs-9">
+                            <input id="edit-contact-phone" name="edit-contact-phone" class="form-control" value="{{list.start_date | date :  'fullDate'}}" placeholder="" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label" for="edit-contact-phone">End date</label>
+                        <div class="col-xs-9">
+                            <input id="edit-contact-phone" name="edit-contact-phone" class="form-control" value="{{list.end_date | date :  'fullDate' }}" placeholder="" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+
+                        <div class="col-xs-12" >
+                            <input  class="btn btn-info" id="" name="button" class="form-control" value="Show details" placeholder="" type="button"  >
+                        </div>
+                    </div>
+
+                </form>
+                <!-- END Edit Contact Content -->
+            </div>
+
+        </div>
     </div>
 
 </div>

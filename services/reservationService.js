@@ -57,6 +57,30 @@ var addreservation=function(reservation,idAccount){
     });
 };
 
+
+
+var addreservationHotel=function(reservation,idAccount){
+    shortid.characters('0123456789abcdefghijk@mnopqrstuvwxyzABCDEFGH#JKLMN-PQRSTUVWXYZ*_');
+    var start_date  = new Date( reservation.start_date.toString() );
+    var end_date  = new Date( reservation.end_date.toString() );
+
+    reservation.start_date =start_date;
+    reservation.end_date = end_date;
+    reservation.accountId = idAccount;
+    reservation.ref = shortid.generate();
+    reservation.type_room = reservation.type_room;
+    reservation.option_room = reservation.option_room.toString();
+    reservation.lock_id= reservation.hotelId;
+    models.reservation.create(reservation).then(function(addedReservation){
+
+        accountService.getAccountById(idAccount,function(account){
+
+            emailService.senMail(account,account.email,"Congratulation",reservation.ref);
+        });
+
+    });
+};
+
 /**
  * this function delete a reservation and take in parameter his id
  * @param data
@@ -107,10 +131,29 @@ var getreservationByIdAccount=function(idAccount,cb){
 
 }
 
+var getreservationForTheManager=function(idhotel,cb){
+var date= new Date();
+    models.reservation.findAll({where:{hotel_id: idhotel,start_date:{$gt : date}}}).then(function(reservationfound){
+
+        return cb(reservationfound);
+    })
+
+};
+
+var getHistriquereservationForTheManager=function(idhotel,cb){
+    var date= new Date();
+    models.reservation.findAll({where:{hotel_id: idhotel,start_date:{$lt : date}}}).then(function(reservationfound){
+
+        return cb(reservationfound);
+    })
+
+};
+
+
 /**
  * function that return a reservation by their id
  * @param idManager
- */
+
 var getreservationForTheManager=function(userConnected,cb){
     var reservationList = [];
         var j =0;
@@ -140,12 +183,14 @@ var getreservationForTheManager=function(userConnected,cb){
         });
 
     console.log('terminer')
-}
+}*/
 exports.deletereservation=deletereservation;
 exports.addreservation=addreservation;
 exports.updatereservation=updatereservation;
 exports.getAllreservation=getAllreservation;
 exports.getreservationByIdAccount=getreservationByIdAccount;
 exports.getreservationForTheManager=getreservationForTheManager;
+exports.addreservationHotel=addreservationHotel;
+exports.getHistriquereservationForTheManager=getHistriquereservationForTheManager;
 
 

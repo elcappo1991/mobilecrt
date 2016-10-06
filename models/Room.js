@@ -10,6 +10,7 @@ module.exports = function(sequelize, DataTypes) {
 
 
         description : DataTypes.STRING,
+        room_number : DataTypes.STRING,
         bed_number :DataTypes.INTEGER,
         lock_id : DataTypes.INTEGER,
        disponibility:{

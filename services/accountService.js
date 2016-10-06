@@ -6,7 +6,7 @@ var cryptoConfig = require('./../config/cryptConf.json');
 var pg = require('pg');
 //pg.defaults.ssl= true;
 var conString = config.App.dbConfig.conString;
-
+var reservationService=require('./reservationService');
 
 /**
  * add account is a function that add a account
@@ -193,6 +193,80 @@ var checkOutAccount=function(idAccount){
     });
 
 }
+var getListAccountPerHotel= function(idHotel,cb) {
+
+    var accountList = [];
+    var j = 0;
+
+    pg.connect(conString, function (err, dbclient, ok) {
+
+        if (err) {
+
+            return console.error('could not connect to the database ' + err);
+        }
+
+        dbclient.query('SELECT distinct "accountId" FROM reservations WHERE "hotel_id" = $1', [idHotel], function (err, rows) {
+
+            if (err)
+                console.log(err);
+            else{
+                for(i=0;i<rows.rows.length;i++){
+                models.account.findOne({where:{id: rows.rows[i].accountId}}).then(function(reservationfound){
+
+                    accountList = accountList.concat(reservationfound);
+
+                    if(i == (rows.rows.length)){
+
+                        j++;
+                        if(j==i ){
+                            cb(accountList)
+
+                        }
+
+
+
+                    }
+                });
+
+            }
+
+
+            }
+
+
+
+        });
+
+    });
+}
+
+
+   /* models.reservation.findAll({where:{hotel_id:idHotel}}).then(function(reservation){
+
+        for(i=0;i<reservation.length;i++){
+
+            models.account.findAll({where:{accountId: reservation[i].accountId}}).then(function(reservationfound){
+
+                reservationList = reservationList.concat(reservationfound);
+                if(i == (accounts.length)){
+
+                    j++;
+                    if(j==i ){
+                        cb(reservationList)
+                    }
+
+
+
+                }
+            });
+
+
+        }
+
+
+    });*/
+
+
 
 
 exports.changePassword=changePassword;
@@ -205,3 +279,4 @@ exports.checkInAccount=checkInAccount;
 exports.checkOutAccount=checkOutAccount;
 exports.getListAccountPerManagerId=getListAccountPerManagerId;
 exports.addAccountFromWebInterface=addAccountFromWebInterface;
+exports.getListAccountPerHotel=getListAccountPerHotel;

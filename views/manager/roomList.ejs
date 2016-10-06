@@ -8,7 +8,7 @@
 
 
 
-    <div class="row">
+    <div class="row" ng-cloak>
 
         <!--<div class="col-lg-4" ng-repeat="list in roomList">
 
@@ -83,17 +83,18 @@
             <a href="javascript:void(0)" class="widget-icon pull-right themed-background">
                 <i class="gi gi-picture"></i>
             </a>
-            <h4 class="widget-content">
+            <h4 class="widget-content" >
                 <a href="javascript:void(0)"><strong>{{type.type}}</strong> </a>
-                <small> <a href="javascript:void(0)">{{list.description}}</a></small><strong> capacity :{{list.bed_number}}</strong>
+                <small> <a href="javascript:void(0)">capacity : {{list.bed_number}}</a></small><strong> Room Number : {{list.room_number}}</strong>
+                <small ng-repeat="roomOp in allRoomOption"  ><span ng-repeat="n in options"   ng-if="list.id == roomOp.roomId && n.id == roomOp.optionId" class="label label-info"> {{n.description}} </span></small>
             </h4>
         </div>
-        <div class="widget-extra-full themed-background-dark">
+        <div class="widget-extra-full themed-background-dark"  >
             <!-- Carousel -->
                 <!-- Wrapper for slides -->
 
                     <div >
-                        <img ng-src="{{list.picture_url}}"  alt="image" width="320"  height="200">
+                        <img ng-src="{{list.picture_url}}"  alt="image"  height="188px" width="99%" >
                     </div>
 
 
@@ -110,4 +111,4 @@
 </div>
     </div>
 
-</div>
+

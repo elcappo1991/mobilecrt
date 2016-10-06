@@ -1,12 +1,14 @@
 
 <% layout('../templates/layoutManager')%>
 
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.6.2/chosen.jquery.js"></script>
+
 
 <script type="text/javascript" src="/javascripts/iso-3166-country-codes-angular.js"></script>
 <script type="text/javascript" src="/angular_app/angular_manager_app.js"></script>
 <div ng-app="app" ng-controller="homePage">
 
-   <div class="row">
+   <div class="row" ng-cloak>
 
 
 
@@ -47,15 +49,51 @@
                    <div class="form-group">
                        <div class="col-md-12">
                            <div class="input-group">
+                               <input type="text" id="room_number" name="room_number" class="form-control " placeholder="room identification " required>
+                               <span class="input-group-addon"><i class=" fa fa-users "></i></span>
+                           </div>
+                       </div>
+                   </div>
+                   <div class="form-group">
+                       <div class="col-md-12">
+                           <div class="input-group">
                                <input type="number" id="bed_number" name="bed_number" class="form-control " placeholder="Max person per room " required>
                                <span class="input-group-addon"><i class=" fa fa-users "></i></span>
                            </div>
                        </div>
                    </div>
 
+               <!--    <div class="form-group">
+                       <div class="col-md-12">
+                           <div class="input-group col-md-12">
+                               <select id="multiselect" class=" chosen-container chosen-container-multi " name="multiselect"   multiple="">
+
+                                   <option ng-repeat="op in options" value="{{op.id}}">{{op.description}}</option>
+
+
+                                   </select>
+                           </div>
+                       </div>
+                   </div>-->
+
                    <div class="form-group">
                        <div class="col-md-12">
-                           <div class="input-group">
+                           <div class="input-group col-md-12">
+                               <select chosen multiple id="multiselect"  name="multiselect"   ng-model="option" ng-options="option.description for option in options" style="width: 100%;">
+
+                            <!--       <option ng-repeat="op in options" value="{{op.id}}">{{op.description}}</option>-->
+
+
+                               </select>
+                           </div>
+                       </div>
+                   </div>
+
+                        <input type="text" id="optionValues" name="optionValues" hidden>
+
+                   <div class="form-group">
+                       <div class="col-md-12">
+                           <div class="input-group ">
                                <input type="text" id="lock_id" name="lock_id" class="form-control " placeholder="Lock identification " required>
                                <span class="input-group-addon"><i class=" fa fa-lock "></i></span>
                            </div>
@@ -87,9 +125,27 @@
    </div>
 
 
-
-
 </div>
 
 
+
+
+
+
+
+<script type="text/javascript">
+    $('#add').submit(function() {
+        var sel = 'div[ng-controller="homePage"]';
+       var tab =[]
+
+      var  scope = angular.element(sel).scope();
+ scope.option.forEach(function(value){
+        tab.push(value.id);
+ });
+        document.getElementById('optionValues').value=tab;
+
+        return true; // return false to cancel form action
+    });
+   // $("#multiselect").chosen({no_results_text: "Oops, nothing found!",placeholder_text_multiple:"please enter room options" });
+</script>
 

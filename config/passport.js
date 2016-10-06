@@ -83,10 +83,10 @@ module.exports = function(passport) {
                         return console.error('could not connect to the database ' + err);
                     }
 
-
+                        console.log("email user to connect : "+email)
                     dbclient.query('SELECT * FROM '+role+' WHERE email = $1', [email], function (err, rows) {
 
-
+                            console.log(rows)
                         if (err) {
                             console.log('erreir' + err);
                             return done(err);

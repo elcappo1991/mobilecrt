@@ -36,7 +36,7 @@ router.get('/changepwd',isLoggedIn,requireRole('owner'), function(req, res, next
 router.post('/addHotel',isLoggedIn,requireRole('owner'),function(req,res){
 
     hotelService.addhotel(req.body,req.user.id);
-    res.redirect('/');
+    res.redirect('/owner/hotel');
 
 })
 
@@ -103,7 +103,7 @@ router.post('/addManager', function(req, res, next) {
                 managerService.addUser(user);
                 emailService.sendMailToManager(user,"New Account Created")
                 res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
-                res.redirect('/owner/hotel')
+                res.redirect('/owner/listManager')
 
 
             }

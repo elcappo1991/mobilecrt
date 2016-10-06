@@ -13,6 +13,11 @@ myApp.controller('APPController', function($scope,$http) {
 
     });
 
+    $http.get('/account/getListHotel').then(function(hotel){
+
+        $scope.hotels=hotel.data;
+    });
+
 
     /**
      * get  the user connected
@@ -30,13 +35,51 @@ myApp.controller('APPController', function($scope,$http) {
         $scope.location= response.data.country;
     });
 });
+
 myApp.controller('APPController1', function($scope,$http) {
 
-    $http.get('/account/roomList').then(function(room){
-        console.log(room.data)
-        $scope.roomList=room.data;
+    $http.get('/account/getListHotel').then(function(hotel){
+
+        $scope.hotels=hotel.data;
     });
+
+
+    $scope.showMap= function(lat, long){
+
+        console.log(lat+' '+long);
+        $('#modal').modal('show');
+        initMap(lat,long);
+    }
+
+    $scope.showOffers=function(idHotel,hotel){
+        $scope.hotel=hotel;
+        var parameters = {
+            id: idHotel
+        };
+        var config = {
+            params: parameters
+        };
+        $('#hotelList').hide();
+       $http.get('/account/TypeRoomListByIdHotel',config).then(function(res){
+           console.log(res.data)
+           $scope.typeList=res.data;
+       })
+        $http.get('/account/optionListByIdHotel',config).then(function(res){
+           console.log(res.data)
+           $scope.optionList=res.data;
+       })
+
+
+
+
+        $('#reservation').show();
+
+    }
+
+    $scope.return=function(){
+
+        $('#hotelList').show();
+        $('#reservation').hide();
+
+    }
 });
-
-
-

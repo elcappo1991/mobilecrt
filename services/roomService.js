@@ -12,9 +12,12 @@ var config = require('./../config/dbconfig.json');
  * @param res
  *
  */
-var addroom=function(room,idHotel){
+var addroom=function(room,idHotel,cb){
     room.hotelId=idHotel;
-    models.room.create(room).then(function(){});
+    models.room.create(room).then(function(r){
+
+        cb(r.dataValues);
+    });
 };
 
 /**
@@ -83,6 +86,9 @@ var getroomByIdHotel=function(idhotel,cb){
     })
 
 }
+
+
+
 exports.deleteroom=deleteroom;
 exports.addroom=addroom;
 exports.updateroom=updateroom;

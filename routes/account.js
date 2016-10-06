@@ -3,12 +3,20 @@ var router = express.Router();
 var reservationService =require('./../services/reservationService');
 var accountServices =require('./../services/accountService');
 var roomService =require('./../services/roomService');
+
+
+var accountService =require('./../services/accountService');
+var managerService =require('./../services/managerService');
+var hotelService =require('./../services/hotelService');
+var roomTypeService =require('./../services/roomTypeService');
+var optionService =require('./../services/optionService');
+var roomOptionService =require('./../services/roomOptionService');
 var pg = require('pg');
 //pg.defaults.ssl= true;;
 var config = require('./../config/dbconfig.json');
 var conString = config.App.dbConfig.conString;
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', isLoggedIn,function(req, res, next) {
     res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
     res.render('account/index');
 });
@@ -64,15 +72,31 @@ router.get('/getListReservation',isLoggedIn, function(req, res, next) {
  */
 router.post('/addReservation',isLoggedIn,function(req,res){
     console.log(req.body)
-    reservationService.addreservation(req.body,req.user.id);
+   reservationService.addreservationHotel(req.body,req.user.id);
     res.redirect('/')
 
+});
+
+router.get('/getListHotel',isLoggedIn,function(req,res){
+
+    hotelService.getAllhotel(function(list){
+        res.json(list);
+    })
 })
 
-router.get('/roomList',isLoggedIn, function(req, res, next) {
-    roomService.getroomByIdManager(req.user.managerId,function(rows){
-        res.json(rows);
+router.get('/TypeRoomListByIdHotel',isLoggedIn, function(req, res, next) {
+
+   roomTypeService.getroomTypeByIdHotel(req.query.id,function(result){
+       res.json(result)
+   })
+
+});
+router.get('/optionListByIdHotel',isLoggedIn, function(req, res, next) {
+
+    optionService.getoptionByIdHotel(req.query.id,function(result){
+        res.json(result)
     })
+
 });
 
 
