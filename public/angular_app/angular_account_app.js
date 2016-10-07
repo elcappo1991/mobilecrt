@@ -61,15 +61,22 @@ myApp.controller('APPController1', function($scope,$http) {
         };
         $('#hotelList').hide();
        $http.get('/account/TypeRoomListByIdHotel',config).then(function(res){
-           console.log(res.data)
            $scope.typeList=res.data;
-       })
+       });
         $http.get('/account/optionListByIdHotel',config).then(function(res){
-           console.log(res.data)
+
            $scope.optionList=res.data;
-       })
+       });
 
+        $http.get('/account/getRoomByIdHotel',config).then(function(res){
+            console.log(res.data);
+            $scope.roomList=res.data;
+        });
 
+  $http.get('/account/getAllRoomOption',config).then(function(res){
+            console.log(res.data);
+            $scope.allRoomOption=res.data;
+        });
 
 
         $('#reservation').show();

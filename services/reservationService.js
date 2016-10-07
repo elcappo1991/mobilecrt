@@ -70,7 +70,7 @@ var addreservationHotel=function(reservation,idAccount){
     reservation.ref = shortid.generate();
     reservation.type_room = reservation.type_room;
     reservation.option_room = reservation.option_room.toString();
-    reservation.lock_id= reservation.hotelId;
+    reservation.hotel_id= reservation.hotelId;
     models.reservation.create(reservation).then(function(addedReservation){
 
         accountService.getAccountById(idAccount,function(account){

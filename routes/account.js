@@ -99,6 +99,22 @@ router.get('/optionListByIdHotel',isLoggedIn, function(req, res, next) {
 
 });
 
+router.get('/getRoomByIdHotel',isLoggedIn, function(req, res, next) {
+
+    roomService.getroomByIdHotel(req.query.id,function(result){
+        res.json(result)
+    })
+
+});
+
+router.get('/getAllRoomOption',isLoggedIn, function(req, res, next) {
+
+    roomOptionService.getAllroomOption(function(result){
+        res.json(result)
+    })
+
+});
+
 
 /**
  * web service that add get the user connectted

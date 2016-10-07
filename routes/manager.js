@@ -84,6 +84,7 @@ router.post('/addRoom',isLoggedIn,requireRole('manager'), function(req, res, nex
 
 
 router.get('/getRoomList',isLoggedIn,requireRole('manager'), function(req, res, next) {
+
 roomService.getroomByIdHotel(req.user.hotelId,function(rows){
   res.json(rows);
 })

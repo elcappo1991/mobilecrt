@@ -76,17 +76,17 @@
 
 
 
-        <div class="col-lg-4 col-md-6" ng-repeat="list in roomList">
+        <div class="col-lg-4 col-md-6" ng-repeat="list in roomList" style="width:370px;">
 
     <div class="widget" >
         <div class="widget-simple" ng-repeat="type in roomType" ng-if="list.roomTypeId == type.id" >
             <a href="javascript:void(0)" class="widget-icon pull-right themed-background">
                 <i class="gi gi-picture"></i>
             </a>
-            <h4 class="widget-content" >
+            <h4 class="widget-content" style="height: 120px;">
                 <a href="javascript:void(0)"><strong>{{type.type}}</strong> </a>
-                <small> <a href="javascript:void(0)">capacity : {{list.bed_number}}</a></small><strong> Room Number : {{list.room_number}}</strong>
-                <small ng-repeat="roomOp in allRoomOption"  ><span ng-repeat="n in options"   ng-if="list.id == roomOp.roomId && n.id == roomOp.optionId" class="label label-info"> {{n.description}} </span></small>
+                <small> <a href="javascript:void(0)">Capacity : {{list.bed_number}}</a></small><strong> Room Number : {{list.room_number}}</strong>
+                <small ng-repeat="roomOp in allRoomOption"  ><h2 ng-repeat="n in options"   ng-if="list.id == roomOp.roomId && n.id == roomOp.optionId" class="label label-info"> {{n.description}} </h2></small>
             </h4>
         </div>
         <div class="widget-extra-full themed-background-dark"  >
