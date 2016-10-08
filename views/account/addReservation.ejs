@@ -150,22 +150,16 @@
                 <div class="block-options pull-right">
 
                 </div>
-                <h2> <strong> Book In  {{hotel.name }} :  </strong></h2>
+                <h2> <strong>you have chosen <strong style="color:#00B7FF;">{{type}} </strong>(<span  style="font-size: small; margin-left: 2px"  ng-repeat="op in option"><i>{{op}}</i></span>):  </strong></h2>
             </div>
 
             <form action="/account/addReservation" method="post" class="form-horizontal form-bordered"  id="register">
 
                         <input type="text" id="hotelId" name="hotelId" value="{{hotel.id}}" hidden>
+                        <input type="text" id="type_room" name="type_room" value="{{type}}" hidden>
+                        <input type="text" id="option_room" name="option_room" value="{{option}}" hidden>
 
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <div><select id="type_room" name="type_room" class="form-control" size="1">
-                                <option >Please select room type</option>
-                                <option ng-repeat="roomType in typeList" value="{{roomType.type}}" > {{roomType.type}} </option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="form-group">
                     <div class="col-md-12">
                         <div class="input-group">
@@ -174,7 +168,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <div class="col-md-12">
                         <div>
                             <select class="js-example-basic-multiple "  multiple="multiple" id="option_room"  name="option_room"  style="width: 100%" >
@@ -186,7 +180,7 @@
                             </select>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label class=" col-md-1 control-label">From</label>
                     <div class="col-md-2 col-md-offset-2">
@@ -216,7 +210,8 @@
 
 
 </div>
-    <div class="block">
+    </div>
+    <div class="block" id="listRoom" hidden>
         <!-- Table Styles Title -->
         <div class="block-title">
             <h2><strong>Reservation</strong> </h2>
@@ -250,7 +245,7 @@
                 </thead>
                 <tbody>
                 <tr ng-repeat="room in roomList">
-                    <td style="width: 350px"><h4 href="" class="text-center" ng-repeat="roomType in typeList"  ng-if="roomType.id == room.roomTypeId">{{roomType.type}}</h4>
+                    <td style="width: 350px"  ><div id="type{{room.id}}"><h4 href="" class="text-center" ng-repeat="roomType in typeList"  ng-if="roomType.id == room.roomTypeId"  >{{roomType.type}}</h4></div>
 
                         <div ng-repeat="roomType in typeList"  ng-if="roomType.id == room.roomTypeId">
 
@@ -259,12 +254,12 @@
 
 
                     </td>
-                    <td class="text-center"style="width: 20%"><h2 style="margin-left: 2px" class="label label-info" ng-repeat="roomOption in allRoomOption" ng-if="roomOption.roomId == room.id"><i  ng-repeat="option in optionList" ng-if="option.id ==roomOption.optionId">  {{option.description }}  </i></h2></td>
-                    <td class="text-center" style="width: 20%"><a href="javascript:void(0)" class="label  label-info">{{room.bed_number }}  <i class="fa fa-user ">  </i></a></td>
+                    <td class="text-center"style="width: 20%" ><div id="option{{room.id}}"><h2  style="margin-left: 2px" class="label label-primary" ng-repeat="roomOption in allRoomOption" ng-if="roomOption.roomId == room.id"><i  ng-repeat="option in optionList" ng-if="option.id ==roomOption.optionId" ng-model="ro.description">  {{option.description }}  </i></h2></div></td>
+                    <td class="text-center" style="width: 20%"><a href="javascript:void(0)" class="label  label-primary" ng-model="ro.bed_number">{{room.bed_number }}  <i class="fa fa-user ">  </i></a></td>
                     <td class="text-center">
                         <div class="btn-group btn-group-xs">
-                            <a href="javascript:void(0)" data-toggle="tooltip" title="Book" class="btn btn-default" data-original-title="Edit"><i class="">Book</i></a>
 
+                            <button type="submit" class="btn btn-sm btn-warning" ng-click="view(room)" ><i class="fa fa-info-circle"></i> Book Now</button>
                         </div>
                     </td>
                 </tr>
@@ -277,7 +272,7 @@
         </div>
         <!-- END Table Styles Content -->
     </div>
-</div>
+
 
 
     <div  id="modal" class="modal" hidden="true">

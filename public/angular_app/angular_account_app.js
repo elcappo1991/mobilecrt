@@ -79,7 +79,8 @@ myApp.controller('APPController1', function($scope,$http) {
         });
 
 
-        $('#reservation').show();
+
+        $('#listRoom').show();
 
     }
 
@@ -87,6 +88,21 @@ myApp.controller('APPController1', function($scope,$http) {
 
         $('#hotelList').show();
         $('#reservation').hide();
+
+    }
+
+
+    $scope.view = function(data){
+
+
+
+        //console.log(data);
+        console.log($('#type'+data.id).text());
+        console.log($('#option'+data.id).text().match(/\S+/gi));
+        $scope.type=$('#type'+data.id).text();
+        $scope.option=$('#option'+data.id).text().match(/\S+/gi);
+        $('#reservation').show();
+        $('#listRoom').hide();
 
     }
 });

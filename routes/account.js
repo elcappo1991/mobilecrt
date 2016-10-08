@@ -76,14 +76,18 @@ router.post('/addReservation',isLoggedIn,function(req,res){
     res.redirect('/')
 
 });
-
+/**
+ *web service that return the hotel list available
+ */
 router.get('/getListHotel',isLoggedIn,function(req,res){
 
     hotelService.getAllhotel(function(list){
         res.json(list);
     })
 })
-
+/**
+ * web service that return type room by hotel id
+ */
 router.get('/TypeRoomListByIdHotel',isLoggedIn, function(req, res, next) {
 
    roomTypeService.getroomTypeByIdHotel(req.query.id,function(result){
