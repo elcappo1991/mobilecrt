@@ -75,6 +75,12 @@ router.get('/option',isLoggedIn,requireRole('manager'), function(req, res, next)
 });
 
 
+router.get('/details',isLoggedIn,requireRole('manager'), function(req, res, next) {
+  res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
+  res.render('manager/DetailsPage');
+});
+
+
 router.post('/addRoom',isLoggedIn,requireRole('manager'), function(req, res, next) {
 
   roomService.addroom(req.body,req.user.hotelId);
@@ -295,6 +301,15 @@ router.get('/getAllRoomOption',isLoggedIn,requireRole("manager"), function(req,r
     res.json(resultat);
   })
 })
+
+
+router.post('/getAccountbyId',isLoggedIn,requireRole("manager"), function(req,res){
+    console.log(req.body)
+  accountService.getAccountById(req.body.accountId,function(resultat){
+    res.json(resultat);
+  })
+})
+
 
 //verifiy if user is connected or not
 function isLoggedIn(req, res, next) {

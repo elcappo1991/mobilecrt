@@ -41,6 +41,22 @@ var addAccountFromWebInterface=function(account){
 };
 
 /**
+ * add companion account is a function that add a account
+ * to the database
+ * @param req
+ * @param res
+ *
+ */
+var addCompanionAccountFromWebInterface=function(account,cb){
+
+    //account.password = CryptoJS.AES.encrypt(account.password, cryptoConfig.cryptKey).toString();
+    account.password = CryptoJS.AES.encrypt(account.first_name, cryptoConfig.cryptKey).toString();
+
+    models.account.create(account).then(function(data){
+      cb(data);
+    });
+};
+/**
  * this function delete a account and take in parameter his id
  * @param data
  */
@@ -280,3 +296,4 @@ exports.checkOutAccount=checkOutAccount;
 exports.getListAccountPerManagerId=getListAccountPerManagerId;
 exports.addAccountFromWebInterface=addAccountFromWebInterface;
 exports.getListAccountPerHotel=getListAccountPerHotel;
+exports.addCompanionAccountFromWebInterface=addCompanionAccountFromWebInterface;

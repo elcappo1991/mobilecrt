@@ -8,7 +8,9 @@ module.exports = function(sequelize, DataTypes) {
             unique: true
         },
         id_account :DataTypes.INTEGER,
-        id_companion : DataTypes.INTEGER
+        id_companion : DataTypes.INTEGER,
+        room: DataTypes.INTEGER,
+        reservation_id : DataTypes.INTEGER
 
     }, {timestamps: true});
 

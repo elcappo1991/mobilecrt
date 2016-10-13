@@ -71,6 +71,7 @@ var addreservationHotel=function(reservation,idAccount){
     reservation.type_room = reservation.type_room;
     reservation.option_room = reservation.option_room.toString();
     reservation.hotel_id= reservation.hotelId;
+
     models.reservation.create(reservation).then(function(addedReservation){
 
         accountService.getAccountById(idAccount,function(account){
@@ -97,11 +98,11 @@ var deletereservation=function(idreservation,cb){
  * @param idreservation
  * @param reservation
  */
-var updatereservation=function(idreservation,reservation){
+var updatereservation=function(reservation,cb){
 
-    models.reservation.findOne({where:{id:idreservation}}).then(function(reservationToUpdate){
+    models.reservation.findOne({where:{id:reservation.id}}).then(function(reservationToUpdate){
 
-        reservationToUpdate.update(reservation);
+        cb(reservationToUpdate.update(reservation));
     });
 
 }

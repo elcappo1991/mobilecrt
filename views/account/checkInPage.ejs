@@ -1,0 +1,102 @@
+
+<% layout('../templates/layoutAccount')%>
+
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.2/angular-animate.js"></script>
+<script data-require="ui-bootstrap@*" data-semver="0.12.0" src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.min.js"></script>
+<link data-require="font-awesome@*" data-semver="4.2.0" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.css" />
+<script type="text/javascript" src="/angular_app/angular_account_app.js"></script>
+<div ng-app="Appl" ng-controller="checkInPage"  ng-cloak>
+<div class="row">
+
+    <div class="col-md-12">
+        <!-- Simple Team Widget -->
+        <div class="widget">
+            <div class="widget-simple text-center">
+
+                <h4 class="widget-content">
+                    <a href="" class="themed-color-flatie"  ng-repeat="hotel in hotels" ng-if="hotel.id== reservation.hotel_id">
+                        <strong style="font-size: xx-large">{{hotel.name}}</strong>
+                    </a>
+                    <small>{{reservation.type_room}}</small>
+                </h4>
+            </div>
+            <div class="widget-extra themed-background-dark-default">
+                <div class="row text-center">
+                    <div class="col-xs-4">
+                        <h3 class="widget-content-light">
+                            <a href="javascript:void(0)" class="themed-color-flatie"><strong>{{reservation.companion_nb}}</strong></a><br>
+                            <small>Companion</small>
+                        </h3>
+                    </div>
+                    <div class="col-xs-4">
+                        <h3 class="widget-content-light">
+                            <a href="javascript:void(0)" class="themed-color-flatie"><strong>{{reservation.room_nb}}</strong></a><br>
+                            <small>Room Booked</small>
+                        </h3>
+                    </div>
+                    <div class="col-xs-4">
+                        <h3 class="widget-content-light">
+                            <a href="javascript:void(0)" class="themed-color-flatie"><strong>{{reservation.ref}}</strong></a><br>
+                            <small>Reference</small>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END Simple Team Widget -->
+    </div>
+
+
+    <div class="col-md-12" class="wizard-main ">
+
+        <h2>Add companion <strong>Wizard</strong> </h2>
+        <wizard current-step-number="currentStepNumber" submit="submit(hola)"  >
+
+            <wizard-step ng-repeat="step in range(1,reservation.companion_nb)"  title="Companion {{step}}">
+
+                <input type="text" id="first_name{{step}}" required   placeholder="First name" ng-model="hola" class="form-control ui-wizard-content " /><br>
+                <input type="text" id="last_name{{step}}" required   placeholder="Last name" ng-model="localScope1" class="form-control ui-wizard-content "/><br>
+                <input type="email" id="email{{step}}" required   placeholder="Email" ng-model="localScope2" class="form-control ui-wizard-content "/><br>
+            <!--    <select class="form-control ui-wizard-content " id="room{{step}}"   ng-model="localScope3"  style="width: 100%" required  >
+
+                    <option value="" disabled selected>Affect to room </option>
+                    <option     ng-repeat="room in range(1,reservation.room_nb)"   value="{{room}}">{{room}}</option>
+
+
+
+                </select>-->
+
+            </wizard-step>
+        </wizard>
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+</div>
+<link rel="stylesheet" href="/css/ngWizard.css" />
+<script src="/angular_app/ngWizard.js"></script>

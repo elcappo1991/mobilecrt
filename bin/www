@@ -18,6 +18,7 @@ var options = {
  * function init fills database rows
  */
 var initSchema=function(){
+
   models.manager.create({first_name:'abesselm',last_name:'bousetta',password:"U2FsdGVkX19Upph/T+cWdbnxAFEfZAUPfGTU1n0MXko=",email:'admin@admin',role:'admin'});
   //models.manager.create({first_name:'wejd',last_name:'daghfous',password:"U2FsdGVkX19Upph/T+cWdbnxAFEfZAUPfGTU1n0MXko=",email:'wejd.daghfous@esprit.tn',role:'manager'});
   models.manager.create({first_name:'dikha',last_name:'dikha',password:"U2FsdGVkX19Upph/T+cWdbnxAFEfZAUPfGTU1n0MXko=",email:'dikha@avempace.com',role:'owner'});
@@ -46,6 +47,8 @@ var initSchema=function(){
   models.room.create({description:' suit ',picture_url:"http://res.cloudinary.com/dm8y7k1tj/image/upload/v1475745586/zegbv4z5qnmquzk1vmlg.jpg",hotelId:1,lock_id:3821,bed_number:2,room_number:"A104",roomTypeId:4});
   models.room.create({description:' suit ',picture_url:"http://res.cloudinary.com/dm8y7k1tj/image/upload/v1475745746/znbfbn6githahq1w1i6q.jpg",hotelId:2,lock_id:3820,bed_number:2,room_number:"C104",roomTypeId:6});
   models.room.create({description:' suit ',picture_url:"http://res.cloudinary.com/dm8y7k1tj/image/upload/v1475745912/ozd1eja63c3eanty43gh.jpg",hotelId:2,lock_id:3860,bed_number:2,room_number:"C105",roomTypeId:7});
+
+
   models.roomOption.create({roomId:1,optionId:1});
   models.roomOption.create({roomId:1,optionId:3});
   models.roomOption.create({roomId:1,optionId:4});

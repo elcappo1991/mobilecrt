@@ -160,27 +160,43 @@
                         <input type="text" id="option_room" name="option_room" value="{{option}}" hidden>
 
 
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <div class="input-group">
-                            <input type="number" id="room_nb" name="room_nb" class="form-control " placeholder="Number Room to book" required>
-                            <span class="input-group-addon"><i class="fa  fa-star"></i></span>
-                        </div>
-                    </div>
-                </div>
-                <!--<div class="form-group">
-                    <div class="col-md-12">
-                        <div>
-                            <select class="js-example-basic-multiple "  multiple="multiple" id="option_room"  name="option_room"  style="width: 100%" >
+                <!--    <div class="form-group">
+                      <div class="col-md-12">
+                          <div class="input-group">
+                              <input type="number" id="room_nb" name="room_nb" class="form-control " placeholder="Number Room to book" required>
+                              <span class="input-group-addon"><i class="fa  fa-home"></i></span>
+                          </div>
+                      </div>
+                  </div>-->
+                  <div class="form-group">
+                      <div class="col-md-12">
+                          <div class="input-group">
+                              <input type="number" id="companion_nb" name="companion_nb" class="form-control " placeholder="Number companion" required>
+                              <span class="input-group-addon"><i class="fa  fa-users"></i></span>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="form-group">
+                      <div class="col-md-12">
+                          <div class="input-group">
+                              <input id="reservation_option" name="reservation_option" class="input-tags " placeholder="Enter booking option" style="display: none;" type="text">
+                              <span class="input-group-addon"><i class="fa  fa-tag"></i></span>
+                          </div>
+                      </div>
+                  </div>
+                  <!--<div class="form-group">
+                      <div class="col-md-12">
+                          <div>
+                              <select class="js-example-basic-multiple "  multiple="multiple" id="option_room"  name="option_room"  style="width: 100%" >
 
-                                    <option     ng-repeat="option in optionList"   value="{{option.description}}">{{option.description}}</option>
+                                      <option     ng-repeat="option in optionList"   value="{{option.description}}">{{option.description}}</option>
 
 
 
-                            </select>
-                        </div>
-                    </div>
-                </div>-->
+                              </select>
+                          </div>
+                      </div>
+                  </div>-->
                 <div class="form-group">
                     <label class=" col-md-1 control-label">From</label>
                     <div class="col-md-2 col-md-offset-2">
@@ -207,6 +223,8 @@
             </form>
 
         </div>
+
+
 
 
 </div>

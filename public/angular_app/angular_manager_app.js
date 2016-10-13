@@ -47,8 +47,18 @@ app.controller('homePage', function($scope,$http,$window) {
 */
 
 
+    $scope.show=function(reservation){
+        console.log(reservation);
+        $window.localStorage.setItem('details',JSON.stringify(reservation))
+        console.log(JSON.parse($window.localStorage.getItem('details')))
+        $window.location.href='/manager/details'
+    }
+
 
 });
+
+
+
 app.controller('TypePage', function($scope,$http,$window) {
     console.log('TypePage');
 
@@ -56,6 +66,37 @@ app.controller('TypePage', function($scope,$http,$window) {
     $http.get('/manager/getRoomType').then(function(hotel){
 
         $scope.roomType=hotel.data;
+    });
+
+
+});
+
+
+app.controller('addRoomPage', function($scope,$http,$window) {
+    console.log('addRoomPage');
+
+
+    $http.get('/manager/getUserConnected').then(function(user){
+
+        $scope.user_info=user.data;
+    });
+
+    $http.get('/manager/getRoomList').then(function(room){
+        console.log(room.data)
+        $scope.roomList=room.data;
+    });
+    $http.get('/manager/getRoomType').then(function(hotel){
+
+        $scope.roomType=hotel.data;
+    });
+    $http.get('/manager/getOption').then(function(option){
+
+        $scope.options=option.data;
+    });
+
+    $http.get('/manager/getAllRoomOption').then(function(option){
+        console.log(option)
+        $scope.allRoomOption=option.data;
     });
 
 
@@ -192,5 +233,30 @@ Myapp.controller('option', function($scope,$http) {
 
 
 
+Myapp.controller('details', function($scope,$http,$window) {
 
+    $scope.reservation= JSON.parse($window.localStorage.getItem('details'))
+    console.log($scope.reservation);
+    $http.get('/account/getListHotel').then(function(hotel){
+        console.log(hotel.data)
+        $scope.hotels=hotel.data;
+    });
+
+    $http.post('/account/getListCompanionPerReservation',$scope.reservation).then(function(data){
+        $scope.companionList=data.data
+        console.log(data.data)
+    })
+    $http.post('/account/getroomTypeByName',$scope.reservation).then(function(data){
+        $scope.picture=data.data.picture_url;
+
+    })
+
+    $http.post('/manager/getAccountbyId',$scope.reservation).then(function(data){
+        console.log(data)
+        $scope.account=data.data;
+
+    })
+
+
+});
 

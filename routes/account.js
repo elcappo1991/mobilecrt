@@ -11,6 +11,7 @@ var hotelService =require('./../services/hotelService');
 var roomTypeService =require('./../services/roomTypeService');
 var optionService =require('./../services/optionService');
 var roomOptionService =require('./../services/roomOptionService');
+var companionService =require('./../services/companionService');
 var pg = require('pg');
 //pg.defaults.ssl= true;;
 var config = require('./../config/dbconfig.json');
@@ -43,6 +44,22 @@ router.get('/changepwd',isLoggedIn, function(req, res, next) {
     res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
     res.render('account/changepwd');
 });
+/**
+ * return ChekIn page
+ */
+router.get('/checkInPage',isLoggedIn, function(req, res, next) {
+    res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
+    res.render('account/checkInPage');
+});
+
+/**
+ * return details reservation page
+ */
+router.get('/details',isLoggedIn, function(req, res, next) {
+    res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
+    res.render('account/DetailsPage');
+});
+
 
 /**
  * return change password page
@@ -71,8 +88,15 @@ router.get('/getListReservation',isLoggedIn, function(req, res, next) {
  * web service that add a reservation
  */
 router.post('/addReservation',isLoggedIn,function(req,res){
+    var res_option= JSON.parse(req.body.option_room)
+    var val= " ";
+    res_option.forEach(function(r){
+        val=val+' '+r;
+    })
+
+    req.body.option_room=val;
     console.log(req.body)
-   reservationService.addreservationHotel(req.body,req.user.id);
+  reservationService.addreservationHotel(req.body,req.user.id);
     res.redirect('/')
 
 });
@@ -128,6 +152,76 @@ router.get('/getUserConnected',isLoggedIn,function(req,res){
 res.json(req.user)
 
 })
+
+
+/**
+ * web service that add get the user connectted
+ */
+router.post('/addCompanion',isLoggedIn,function(req,res){
+
+        accountService.addCompanionAccountFromWebInterface(req.body,function(companion){
+            var user={};
+            user.id_account=req.user.id;
+            user.id_companion=companion.id;
+            user.room= req.body.room;
+            user.reservation_id=req.body.reservation;
+
+            companionService.addcompanion(user)
+
+        })
+res.json('success')
+
+
+})
+
+/**
+ * web service that modify reservation
+ * */
+router.post('/checkIn',isLoggedIn,function(req,res){
+
+    req.body.checkin=true;
+    req.body.checkin_date=new Date();
+    console.log(req.body)
+
+reservationService.updatereservation(req.body,function(data){
+
+    res.json(data);
+})
+
+})
+/**
+ * return list companion per reservation
+ */
+router.post('/getListCompanionPerReservation',isLoggedIn,function(req,res){
+
+
+
+    companionService.getcompanionByIdReservation(req.body.id,function(data){
+
+        res.json(data)
+
+    })
+
+})
+
+
+/**
+ * return  room type by type
+ */
+router.post('/getroomTypeByName',isLoggedIn,function(req,res){
+
+
+
+    roomTypeService.getroomTypeByName(req.body.type_room,function(data){
+
+        res.json(data)
+
+    })
+
+})
+
+
+
 
 /**
  * register web service

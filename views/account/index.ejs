@@ -22,15 +22,25 @@
 
 
 <div class="row" ng-cloak>
-    <div class="col-lg-4" ng-repeat="list in listReservation">
+    <div ng-if="nbCheckedIn != 0" >
+        <h2 style="margin-left: 20px">To Check <strong>reservation</strong> </h2><br>
+   <div class="col-md-12">
+
+    <div class="col-lg-4" ng-repeat="list in listReservation" ng-if="list.checkin == false">
         <!-- Edit Contact Block -->
         <div class="block">
             <!-- Edit Contact Title -->
-            <div class="block-title">
+            <div ng-if="list.checkin == false" class="block-title " >
                 <div class="block-options pull-right">
 
                 </div>
-                <h2><i class="fa fa-ticket"></i> reservation     <a>{{list.ref}}</a> </h2>
+                <h2><i class="fa fa-ticket"></i> reservation     <a>{{list.ref}}</a> </h2><a href="javascript:void(0)" class="text-success msg-read-btn pull-right" title="Waiting to check"><i class="fa fa-circle"></i></a>
+            </div>
+            <div ng-if="list.checkin == true" class="block-title">
+                <div class="block-options pull-right">
+
+                </div>
+                <h2><i class="fa fa-ticket"></i> reservation     <a>{{list.ref}}</a> </h2><a href="javascript:void(0)" class="text-muted msg-read-btn pull-right" title="Reservation already Checked"><i class="fa fa-circle"></i></a>
             </div>
             <!-- END Edit Contact Title -->
 
@@ -49,24 +59,8 @@
                         <input id="edit-contact-email" name="edit-contact-email" class="form-control"ng-repeat="hotel in hotels" ng-if="hotel.id == list.hotel_id" value="{{hotel.location}}" placeholder="" type="text">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label" for="edit-contact-email">Room type</label>
-                    <div class="col-xs-9">
-                        <input id="edit-contact-email" name="edit-contact-email" class="form-control" value="{{list.type_room}}" placeholder="" type="text">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label" for="edit-contact-email">Booked Room</label>
-                    <div class="col-xs-9">
-                        <input id="edit-contact-email" name="edit-contact-email" class="form-control" value="{{list.room_nb}}" placeholder="" type="text">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label" for="edit-contact-phone">Room option</label>
-                    <div class="col-xs-9">
-                        <input id="edit-contact-phone" name="edit-contact-phone" class="form-control" value="{{list.option_room}}" placeholder="" type="text">
-                    </div>
-                </div>
+
+
                 <div class="form-group">
                     <label class="col-xs-3 control-label" for="edit-contact-phone">Start date</label>
                     <div class="col-xs-9">
@@ -82,7 +76,9 @@
                 <div class="form-group">
 
                     <div class="col-xs-12" >
-                        <input  class="btn btn-info" id="" name="button" class="form-control" value="Show details" placeholder="" type="button"  >
+                        <input  class="btn btn-warning" id="" name="button" class="form-control"  ng-if="list.checkin == false && list.start_date > mfstDate" value="Check In" placeholder="" type="button" ng-click="show(list)" >
+                        <input  class="btn btn-info" id="" name="button" class="form-control" ng-if="list.checkin == true " value="Show Details" placeholder="" type="button" ng-click="details(list)" >
+                     <!--   <input  class="btn btn-info" id="" name="button" class="form-control" ng-if="list.checkin == true && list.start_date > mfstDate" value="Show Details" placeholder="" type="button"  >-->
                     </div>
                 </div>
 
@@ -97,12 +93,78 @@
 
 
 
-
-
 </div>
+    </div>
 
+
+    <br>
+    <div ng-if="nbAlready !=0">
+    <h2 style="margin-left: 20px">Already CheckedIn <strong>reservation</strong> </h2><br>
+    <div class="col-lg-4" ng-repeat="list in listReservation" ng-if="list.checkin == true">
+        <!-- Edit Contact Block -->
+        <div class="block">
+            <!-- Edit Contact Title -->
+            <div ng-if="list.checkin == false" class="block-title " >
+                <div class="block-options pull-right">
+
+                </div>
+                <h2><i class="fa fa-ticket"></i> reservation     <a>{{list.ref}}</a> </h2><a href="javascript:void(0)" class="text-success msg-read-btn pull-right" title="Waiting to check"><i class="fa fa-circle"></i></a>
+            </div>
+            <div ng-if="list.checkin == true" class="block-title">
+                <div class="block-options pull-right">
+
+                </div>
+                <h2><i class="fa fa-ticket"></i> reservation     <a>{{list.ref}}</a> </h2><a href="javascript:void(0)" class="text-muted msg-read-btn pull-right" title="Reservation already Checked"><i class="fa fa-circle"></i></a>
+            </div>
+            <!-- END Edit Contact Title -->
+
+            <!-- Edit Contact Content -->
+            <form action="" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
+
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" for="edit-contact-name">Hotel</label>
+                    <div class="col-xs-9">
+                        <input id="edit-contact-name" name="edit-contact-name" ng-repeat="hotel in hotels" ng-if="hotel.id == list.hotel_id" class="form-control" value="{{hotel.name}}" placeholder="" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" for="edit-contact-email">Location</label>
+                    <div class="col-xs-9">
+                        <input id="edit-contact-email" name="edit-contact-email" class="form-control"ng-repeat="hotel in hotels" ng-if="hotel.id == list.hotel_id" value="{{hotel.location}}" placeholder="" type="text">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" for="edit-contact-phone">Start date</label>
+                    <div class="col-xs-9">
+                        <input id="edit-contact-phone" name="edit-contact-phone" class="form-control" value="{{list.start_date | date :  'fullDate'}}" placeholder="" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label" for="edit-contact-phone">End date</label>
+                    <div class="col-xs-9">
+                        <input id="edit-contact-phone" name="edit-contact-phone" class="form-control" value="{{list.end_date | date :  'fullDate' }}" placeholder="" type="text">
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <div class="col-xs-12" >
+                        <input  class="btn btn-warning" id="" name="button" class="form-control"  ng-if="list.checkin == false && list.start_date > mfstDate" value="Check In" placeholder="" type="button" ng-click="show(list)" >
+                        <input  class="btn btn-info" id="" name="button" class="form-control" ng-if="list.checkin == true " value="Show Details" placeholder="" type="button" ng-click="details(list)" >
+                        <!--   <input  class="btn btn-info" id="" name="button" class="form-control" ng-if="list.checkin == true && list.start_date > mfstDate" value="Show Details" placeholder="" type="button"  >-->
+                    </div>
+                </div>
+
+            </form>
+            <!-- END Edit Contact Content -->
+        </div>
 
     </div>
+</div>
+</div>
+</div>
+
 
 
 

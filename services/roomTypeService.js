@@ -79,7 +79,20 @@ var getroomTypeById=function(idroomType,cb){
  */
 var getroomTypeByIdHotel=function(idHotel,cb){
 
-    models.roomType.findAll({where:{hotelId: idHotel}}).then(function(roomTypefound){
+        models.roomType.findAll({where:{hotelId: idHotel}}).then(function(roomTypefound){
+
+            return cb(roomTypefound);
+        })
+
+    }
+
+/**
+ * function that return a roomType by their name
+ * @param tyê
+ */
+var getroomTypeByName=function(type,cb){
+            type= type.toString();
+    models.roomType.findOne({where:{type: type}}).then(function(roomTypefound){
 
         return cb(roomTypefound);
     })
@@ -91,5 +104,6 @@ exports.updateroomType=updateroomType;
 exports.getAllroomType=getAllroomType;
 exports.getoomById=getroomTypeById;
 exports.getroomTypeByIdHotel=getroomTypeByIdHotel;
+exports.getroomTypeByName=getroomTypeByName;
 
 

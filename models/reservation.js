@@ -21,10 +21,11 @@ module.exports = function(sequelize, DataTypes) {
 
         checkin_date: DataTypes.DATE,
         checkout_date: DataTypes.DATE,
-        checkin: DataTypes.BOOLEAN,
-        checkout: DataTypes.BOOLEAN,
+        checkin: {type:DataTypes.BOOLEAN, defaultValue: false},
+        checkout:{type:DataTypes.BOOLEAN, defaultValue: false},
         companion_nb :DataTypes.INTEGER,
         room_nb :DataTypes.INTEGER,
+        reservation_option: DataTypes.STRING,
         hotel_id : DataTypes.INTEGER
     }, {timestamps: true});
 
