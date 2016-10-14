@@ -107,6 +107,24 @@ var updatereservation=function(reservation,cb){
 
 }
 
+
+
+var confirmReservation=function(id,managerId,cb){
+
+    models.reservation.findOne({where:{id:id}}).then(function(reservationToUpdate){
+
+            reservationToUpdate.confirm =true;
+        reservationToUpdate.managerId= managerId;
+        reservationToUpdate.update(reservationToUpdate.dataValues).then(function(data){
+            cb(data)
+        });
+    });
+
+}
+
+
+
+
 /**
  * function that return all reservations
  * @param cb
@@ -193,5 +211,6 @@ exports.getreservationByIdAccount=getreservationByIdAccount;
 exports.getreservationForTheManager=getreservationForTheManager;
 exports.addreservationHotel=addreservationHotel;
 exports.getHistriquereservationForTheManager=getHistriquereservationForTheManager;
+exports.confirmReservation=confirmReservation;
 
 

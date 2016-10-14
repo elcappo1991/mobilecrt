@@ -47,6 +47,33 @@ var updateroom=function(idroom,room,cb){
     });
 
 }
+var affectRoomToReservation=function(resId,roomId,cb){
+
+    models.room.findOne({where:{
+        id:roomId
+                                }
+                        }).then(function(roomToUpdate){
+          roomToUpdate.reservationId = resId;
+        roomToUpdate.disponibility= false;
+
+        cb(roomToUpdate.update(roomToUpdate.dataValues).then(function(){}))
+});
+
+}
+
+var setRoomAvailable=function(roomId,cb){
+
+    models.room.findOne({where:{
+        id:roomId
+                                }
+                        }).then(function(roomToUpdate){
+          roomToUpdate.reservationId = null;
+        roomToUpdate.disponibility= true;
+
+        cb(roomToUpdate.update(room).then(function(){}))
+    });
+
+}
 
 /**
  * function that return all rooms
@@ -89,11 +116,15 @@ var getroomByIdHotel=function(idhotel,cb){
 
 
 
+
 exports.deleteroom=deleteroom;
 exports.addroom=addroom;
 exports.updateroom=updateroom;
 exports.getAllroom=getAllroom;
 exports.getoomById=getroomById;
 exports.getroomByIdHotel=getroomByIdHotel;
+exports.affectRoomToReservation=affectRoomToReservation;
+exports.setRoomAvailable=setRoomAvailable;
+
 
 

@@ -191,6 +191,7 @@ Myapp.controller('room', function($scope,$http) {
 
 
 });
+
 Myapp.controller('account', function($scope,$http) {
     console.log('account List Page');
 
@@ -257,6 +258,76 @@ Myapp.controller('details', function($scope,$http,$window) {
 
     })
 
+
+    $scope.go=function(){
+
+        $('#first').hide();
+        $('#second').show();
+
+
+    }
+
+    $scope.back=function(){
+        $('#second').hide();
+        $('#first').show();
+
+    }
+
+    $scope.choice=function(room){
+
+      if(  $('#add'+room.id).attr('class')=='gi gi-minus'){
+            $scope.selectedRoom=null;
+          console.log(room);
+          $('#add'+room.id).attr('class', 'gi gi-plus');
+          $('#confirm').hide();
+      }else{
+          $scope.selectedRoom=room;
+          console.log(room);
+          $('#add'+room.id).attr('class', 'gi gi-minus');
+      $('#confirm').show();
+      }
+
+    }
+
+    $scope.forward=function(){
+       console.log($scope.selectedRoom)
+        var data ={};
+        data.resId=$scope.reservation.id;
+        data.room=$scope.selectedRoom.id;
+        data.email=$scope.account.email;
+        $http.post('/manager/confirmReservation',data).then(function(res){
+
+            if(res.data=='done'){
+               $window.location.href='/manager'
+            }else{
+                $window.location.href='/error'
+            }
+
+        })
+
+    }
+
+    /**
+     * this part is for the room
+     */
+
+    $http.get('/manager/getRoomList').then(function(room){
+        console.log(room.data)
+        $scope.roomList=room.data;
+    });
+    $http.get('/manager/getRoomType').then(function(hotel){
+
+        $scope.roomType=hotel.data;
+    });
+    $http.get('/manager/getOption').then(function(option){
+
+        $scope.options=option.data;
+    });
+
+    $http.get('/manager/getAllRoomOption').then(function(option){
+        console.log(option)
+        $scope.allRoomOption=option.data;
+    });
 
 });
 

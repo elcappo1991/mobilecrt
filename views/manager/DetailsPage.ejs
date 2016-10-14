@@ -5,7 +5,7 @@
 
 <script type="text/javascript" src="/angular_app/angular_manager_app.js"></script>
 <div ng-app="Myapp" ng-controller="details"  ng-cloak>
-<div class="row">
+<div class="row" id="first">
 
     <div class="col-md-12">
         <!-- Simple Team Widget -->
@@ -15,6 +15,22 @@
                 <h4 class="widget-content">
                     <a href="" class="themed-color-flatie" >
                         <strong style="font-size: xx-large">{{account.first_name}} {{account.last_name}}</strong>
+
+                        <div class="col-sm-6 col-lg-4 pull-right themed-background-dark-default" ng-click="go()">
+                            <!-- Widget -->
+                            <a href="" class="widget  themed-background-dark-default">
+                                <div class="widget-simple">
+                                    <div class="widget-icon pull-right themed-background-fire animation-fadeIn">
+                                        <i class="gi gi-redo"></i>
+                                    </div>
+                                    <h3 class="widget-content text-left animation-pullDown">
+                                         <strong>Confirm CheckIn</strong>
+                                        <small> Click here To</small>
+                                    </h3>
+                                </div>
+                            </a>
+                            <!-- END Widget -->
+                        </div>
                     </a>
                     <small  ng-repeat="hotel in hotels" ng-if="hotel.id== reservation.hotel_id">{{hotel.name}} Hotel</small>
                 </h4>
@@ -141,7 +157,116 @@
     </div>
 
 
+<div class="row" id="second"  hidden  >
 
+    <h2 style="margin-left: 20px">Available  <strong>{{reservation.type_room}}</strong>  Room</h2><br>
+
+    <div class="col-md-12">
+        <div class="widget">
+            <div class="widget-extra themed-background-dark-default text-center" >
+              <h3 class="widget-content-light"> Room <strong>Requirement :</strong></h3> <!-- <h4  class="widget-content-light">capacity :     Room Option : {{reservation.option_room}} </h4>-->
+
+
+            </div>
+            <div class="widget text-center col-md-6">
+                <!-- Jquery Sparkline (initialized in js/pages/widgetsStats.js), for more examples you can check out http://omnipotent.net/jquery.sparkline/#s-about -->
+                <div class="widget-simple">
+                    <a href="javascript:void(0)" class="widget-icon pull-right themed-background">
+                        <i class="gi gi-user"></i>
+                    </a>
+                    <h3 class="text-right animation-stretchRight pull-left">Capacity :<strong>{{reservation.companion_nb+1}}</strong></h3>
+                </div>
+            </div>
+            <div class="widget  col-md-6 text-center">
+                <!-- Jquery Sparkline (initialized in js/pages/widgetsStats.js), for more examples you can check out http://omnipotent.net/jquery.sparkline/#s-about -->
+                <div class="widget-simple">
+                    <a href="javascript:void(0)" class="widget-icon pull-right themed-background">
+                        <i class="gi gi-book_open"></i>
+                    </a>
+                    <h3 class="text-right animation-stretchRight pull-left">option: <strong>{{reservation.option_room}}</strong></h3>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div ng-repeat="list in roomList" ng-if="list.disponibility==true">
+    <div class="col-lg-4 col-md-6"  style="width:370px;" ng-repeat="typeR in roomType" ng-if="list.roomTypeId == typeR.id && typeR.type== reservation.type_room" >
+
+        <div class="widget"  >
+            <div class="widget-simple" ng-repeat="type in roomType" ng-if="list.roomTypeId == type.id " >
+                <a ng-click="choice(list)" class="widget-icon pull-right themed-background">
+                    <i id="{{'add'+list.id}}" class="gi gi-plus"></i>
+                </a>
+                <h4 class="widget-content" style="height: 120px;">
+                    <a href="javascript:void(0)"><strong >{{type.type}}</strong> </a>
+                    <small> <a href="javascript:void(0)">Capacity : {{list.bed_number}}</a></small><strong ng-model='room.roomNumber'> Room Number : {{list.room_number}}</strong>
+                    <small ng-repeat="roomOp in allRoomOption"  ><h2 ng-repeat="n in options"   ng-if="list.id == roomOp.roomId && n.id == roomOp.optionId" class="label label-info" > {{n.description}} </h2></small>
+                </h4>
+            </div>
+            <div class="widget-extra-full themed-background-dark"  >
+                <!-- Carousel -->
+                <!-- Wrapper for slides -->
+
+                <div >
+                    <img ng-src="{{list.picture_url}}"  alt="image"  height="188px"  width="99%" >
+                </div>
+
+
+                <!-- END Wrapper for slides -->
+
+                <!-- Controls -->
+
+                <!-- END Controls -->
+            </div>
+            <!-- END Carousel -->
+        </div>
+    </div>
+    </div>
+
+
+
+
+<div class="col-md-12">
+    <!--<
+        <a href="" class="widget  themed-background-dark-default">
+            <div class="widget-simple">
+                <div class="widget-icon pull-right themed-background-fire animation-fadeIn">
+                    <i class="gi gi-redo"></i>
+                </div>
+                <h3 class="widget-content text-left animation-pullDown">
+                    <strong>Confirm CheckIn</strong>
+                    <small> Click here To</small>
+                </h3>
+            </div>
+        </a>
+
+    </div>-->
+    <div id="confirm" class="col-sm-6 col-lg-12 themed-background-dark-default" ng-click="forward()" hidden>
+        <!-- Widget -->
+        <a href="" class="widget  themed-background-dark-default">
+            <div class="widget-simple">
+                <div class="widget-icon pull-right themed-background-fire animation-fadeIn">
+                    <i class="gi gi-redo"></i>
+                </div>
+                <h3 class="widget-content text-left animation-pullDown">
+                    <strong>Confirm affectation </strong>
+
+
+                    <small> Click here To</small>
+                </h3>
+            </div>
+        </a>
+        <!-- END Widget -->
+    </div>
+</div>
+
+
+
+
+</div>
 
 
 

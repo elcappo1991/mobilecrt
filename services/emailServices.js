@@ -45,5 +45,43 @@ var sendMailToManager=function(user,subject){
 }
 
 
+var sendConfirmationMailToAccount=function(email,reservation,subject){
+    var mailOptions={
+        to : email,
+        subject :subject,
+        generateTextFromHTML: true,
+       // html : '<h3> hello '+user.first_name+" "+user.last_name+' </h3><br> your account have been created successfully You can now log using your email address  <br> Your password is :'+user.first_name+' <br> '+'Please perform to change your password in your first connection'
+        html: 'Your reservaation '+reservation.ref +' is confirmed for the periode '+reservation.start_date.toUTCString()+' till '+reservation.end_date.toUTCString()
+    }
+
+    smtpTransport.sendMail(mailOptions, function(error, response){
+        if(error){
+
+            console.log(error)
+        }else{
+            console.log("Message sent: " + response);
+        }
+    });
+
+}
+var sendMailToManager=function(user,subject){
+    var mailOptions={
+        to : user.email,
+        subject :subject,
+        generateTextFromHTML: true,
+        html : '<h3> hello '+user.first_name+" "+user.last_name+' </h3><br> your account have been created successfully You can now log using your email address  <br> Your password is :'+user.first_name+' <br> '+'Please perform to change your password in your first connection'
+    }
+
+    smtpTransport.sendMail(mailOptions, function(error, response){
+        if(error){
+
+            console.log(error)
+        }else{
+            console.log("Message sent: " + response);
+        }
+    });
+
+}
 exports.senMail=sendMail;
 exports.sendMailToManager=sendMailToManager;
+exports.sendConfirmationMailToAccount=sendConfirmationMailToAccount;

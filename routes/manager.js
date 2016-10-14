@@ -8,6 +8,7 @@ var hotelService =require('./../services/hotelService');
 var roomTypeService =require('./../services/roomTypeService');
 var optionService =require('./../services/optionService');
 var roomOptionService =require('./../services/roomOptionService');
+var emailService =require('./../services/emailServices');
 var pg = require('pg');
 //pg.defaults.ssl= true;;
 var config = require('./../config/dbconfig.json');
@@ -245,6 +246,7 @@ router.post('/addRoomWithImage',upload.single('image'), function(req, res){
 
     var cloudStream = cloudinary.uploader.upload_stream(function (result) {
       req.body.picture_url = result.url;
+
       roomService.addroom(req.body, req.user.hotelId,function(room){
 
         var tab=req.body.optionValues.split(",");
@@ -304,10 +306,26 @@ router.get('/getAllRoomOption',isLoggedIn,requireRole("manager"), function(req,r
 
 
 router.post('/getAccountbyId',isLoggedIn,requireRole("manager"), function(req,res){
-    console.log(req.body)
+
   accountService.getAccountById(req.body.accountId,function(resultat){
     res.json(resultat);
   })
+})
+
+
+router.post('/confirmReservation',isLoggedIn,requireRole("manager"), function(req,res){
+
+  roomService.affectRoomToReservation(req.body.resId,req.body.room,function(resultat){
+    reservationService.confirmReservation(req.body.resId,req.user.id,function(data){
+      console.log(data.dataValues);
+      emailService.sendConfirmationMailToAccount(req.body.email,data.dataValues,"Reservation Confirmed")
+      res.json('done');
+
+    })
+
+  })
+
+
 })
 
 
