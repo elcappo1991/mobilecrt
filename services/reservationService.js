@@ -150,6 +150,20 @@ var getreservationByIdAccount=function(idAccount,cb){
 
 }
 
+
+/**
+ * function that return a reservation by their id
+ * @param idManager
+ */
+var getreservationById=function(id,cb){
+
+    models.reservation.findAll({where:{id: id}}).then(function(reservationfound){
+
+        return cb(reservationfound);
+    })
+
+}
+
 var getreservationForTheManager=function(idhotel,cb){
 var date= new Date();
     models.reservation.findAll({where:{hotel_id: idhotel,start_date:{$gt : date}}}).then(function(reservationfound){
@@ -212,5 +226,6 @@ exports.getreservationForTheManager=getreservationForTheManager;
 exports.addreservationHotel=addreservationHotel;
 exports.getHistriquereservationForTheManager=getHistriquereservationForTheManager;
 exports.confirmReservation=confirmReservation;
+exports.getreservationById=getreservationById;
 
 

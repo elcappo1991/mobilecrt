@@ -24,6 +24,12 @@ app.controller('homePage', function($scope,$http,$window) {
         $scope.hotel_info=hotel.data;
     });
 
+   $http.get('/manager/getListAffectionRoom').then(function(list){
+
+      $scope.affectationRoomList=list.data;
+       console.log(list.data[0])
+    });
+
     $http.get("http://ipinfo.io").then(function(response) {
 
        $scope.location= response.data.country;
@@ -54,6 +60,24 @@ app.controller('homePage', function($scope,$http,$window) {
         $window.location.href='/manager/details'
     }
 
+
+});
+
+app.controller('roomDetails', function($scope,$http,$window) {
+    console.log('home Page');
+
+
+
+   $http.get('/manager/getListAffectionRoom').then(function(list){
+
+      $scope.affectationRoomList=list.data;
+       console.log(list.data[0])
+    });
+    $http.get('/manager/getAvailableRoomByIdHotel').then(function(list){
+
+      $scope.availableRoom=list.data;
+
+    });
 
 });
 
@@ -293,8 +317,8 @@ Myapp.controller('details', function($scope,$http,$window) {
        console.log($scope.selectedRoom)
         var data ={};
         data.resId=$scope.reservation.id;
-        data.room=$scope.selectedRoom.id;
-        data.email=$scope.account.email;
+        data.room=$scope.selectedRoom;
+        data.user=$scope.account;
         $http.post('/manager/confirmReservation',data).then(function(res){
 
             if(res.data=='done'){

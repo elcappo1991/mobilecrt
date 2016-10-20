@@ -9,6 +9,7 @@ var roomTypeService =require('./../services/roomTypeService');
 var optionService =require('./../services/optionService');
 var roomOptionService =require('./../services/roomOptionService');
 var emailService =require('./../services/emailServices');
+var tokenService =require('./../services/tokenService');
 var pg = require('pg');
 //pg.defaults.ssl= true;;
 var config = require('./../config/dbconfig.json');
@@ -79,6 +80,12 @@ router.get('/option',isLoggedIn,requireRole('manager'), function(req, res, next)
 router.get('/details',isLoggedIn,requireRole('manager'), function(req, res, next) {
   res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
   res.render('manager/DetailsPage');
+});
+
+
+router.get('/roomDetails',isLoggedIn,requireRole('manager'), function(req, res, next) {
+  res.locals.user = req.user.first_name+ ' '+ req.user.last_name;
+  res.render('manager/roomDetails');
 });
 
 
@@ -228,11 +235,12 @@ router.post('/upload',upload.single('image'), function(req, res){
 
   var cloudStream = cloudinary.uploader.upload_stream(function(result) {
     req.body.picture_url=result.url;
-    roomTypeService.addroomType(req.body,req.user.hotelId)
+    roomTypeService.addroomType(req.body,req.user.hotelId);
     res.redirect('/manager/roomType');
   });
 
   imageStream.on('data', cloudStream.write).on('end', cloudStream.end);
+    rmDir('./uploads',false);
   }else{
     req.body.picture_url="http://res.cloudinary.com/dvsfc8qz2/image/upload/v1475316049/gblgablh9etjq45kiefm.jpg"
     roomTypeService.addroomType(req.body,req.user.hotelId);
@@ -258,7 +266,9 @@ router.post('/addRoomWithImage',upload.single('image'), function(req, res){
       });
     });
     imageStream.on('data', cloudStream.write).on('end', cloudStream.end);
-    setTimeout(function(){  res.redirect('/manager/roomList')},3000)
+    setTimeout(function(){
+      rmDir('./uploads',false);
+      res.redirect('/manager/roomList')},3000)
 
 
   }else{
@@ -315,19 +325,41 @@ router.post('/getAccountbyId',isLoggedIn,requireRole("manager"), function(req,re
 
 router.post('/confirmReservation',isLoggedIn,requireRole("manager"), function(req,res){
 
-  roomService.affectRoomToReservation(req.body.resId,req.body.room,function(resultat){
+  roomService.affectRoomToReservation(req.body.resId,req.body.room.id,function(resultat){
     reservationService.confirmReservation(req.body.resId,req.user.id,function(data){
-      console.log(data.dataValues);
-      emailService.sendConfirmationMailToAccount(req.body.email,data.dataValues,"Reservation Confirmed")
+
+      var token={};
+      token.accountId=data.dataValues.accountId;
+      token.validation_date=data.dataValues.end_date;
+      token.roomId=req.body.room.id;
+      tokenService.addToken(token,function(token){console.log(token)});
+      emailService.sendConfirmationMailToAccount(req.body.user,data.dataValues,req.body.room,"Reservation Confirmed");
       res.json('done');
 
-    })
+    });
 
   })
 
 
 })
 
+
+router.get('/getListAffectionRoom',isLoggedIn,requireRole("manager"),function(req,res){
+
+  roomService.getAffectionRoom(req.user.hotelId,function(rows){
+    res.json(rows)
+  });
+})
+
+
+router.get('/getAvailableRoomByIdHotel',isLoggedIn,requireRole('manager'),function(req,res){
+
+  roomService.getAvailableRoomByIdHotel(req.user.hotelId,function(rows){
+
+   res.json(rows)
+  })
+
+})
 
 //verifiy if user is connected or not
 function isLoggedIn(req, res, next) {
@@ -349,6 +381,23 @@ function requireRole(role) {
       res.render('404');
   }
 }
+rmDir = function(dirPath, removeSelf) {
+  if (removeSelf === undefined)
+    removeSelf = true;
+  try { var files = fs.readdirSync(dirPath); }
+  catch(e) { return; }
+  if (files.length > 0)
+    for (var i = 0; i < files.length; i++) {
+      var filePath = dirPath + '/' + files[i];
+      if (fs.statSync(filePath).isFile())
+        fs.unlinkSync(filePath);
+      else
+        rmDir(filePath);
+    }
+  if (removeSelf)
+    fs.rmdirSync(dirPath);
+};
+
 
 
 module.exports = router;

@@ -15,7 +15,9 @@ var shortid=require('shortid');
  */
 var addToken=function(token){
     token.key=generateToken();
-    models.token.create(token).then(function(){});
+    models.token.create(token).then(function(result){
+        cb(result.dataValues)
+    });
 };
 
 /**
@@ -74,7 +76,6 @@ var getLockById=function(idToken,cb){
 var generateToken=function(){
 
     shortid.characters('0123456789abcdefghijk@mnopqrstuvwxyzABCDEFGH#JKLMN-PQRSTUVWXYZ*_');
-
     generatedPass=shortid.generate();
     return generatedPass;
 }

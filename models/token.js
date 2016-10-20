@@ -7,6 +7,7 @@ module.exports = function(sequelize, DataTypes) {
             autoIncrement: true,
             unique: true
         },
+        key: DataTypes.STRING,
         validation_date:DataTypes.DATE
     }, {timestamps: true});
 

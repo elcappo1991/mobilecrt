@@ -24,6 +24,8 @@ var config = require('./config/dbconfig.json');
 require('./config/passport')(passport);
 //var flash    = require('connect-flash');
 
+
+
 /**
  *
  * session storage configuration for postgres database
@@ -101,12 +103,14 @@ app.use(methodOverride());
  * end upload image
  * **/
 
-
-
+// for the cron job
+require('./services/automatedServices')
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
-console.log('************////////////////////////*******************////////////////// errueeur *****////////////****************************////////////////////////')
+
+
+
   res.locals.user = null;
   res.render('error');
 
@@ -117,6 +121,8 @@ console.log('************////////////////////////*******************////////////
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
+
+
   app.use(function(err, req, res, next) {
     res.status(err.status || 500);
 console.log(err);

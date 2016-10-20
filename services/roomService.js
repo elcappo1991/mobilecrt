@@ -1,7 +1,9 @@
 
 var models=require('./../models');
 var config = require('./../config/dbconfig.json');
-
+var pg = require('pg');
+//pg.defaults.ssl= true;
+var conString = config.App.dbConfig.conString;
 
 
 
@@ -70,7 +72,7 @@ var setRoomAvailable=function(roomId,cb){
           roomToUpdate.reservationId = null;
         roomToUpdate.disponibility= true;
 
-        cb(roomToUpdate.update(room).then(function(){}))
+        cb(roomToUpdate.update(roomToUpdate.dataValues).then(function(){}))
     });
 
 }
@@ -114,6 +116,112 @@ var getroomByIdHotel=function(idhotel,cb){
 
 }
 
+/**
+ * this function return all affected room and their user
+ */
+var getAffectionRoom=function(hotelId,cb) {
+
+    pg.connect(conString, function (err, dbclient, ok) {
+
+        if (err) {
+
+            return console.error('could not connect to the database ' + err);
+        }
+
+        dbclient.query('SELECT * FROM rooms where disponibility = false and "hotelId"=$1' ,[hotelId], function (err, rows) {
+                if(err){console.log(err)}
+            else{
+                    var tab=[];
+
+                    rows.rows.forEach(function(res){
+                        models.reservation.findOne({where:{id: res.reservationId}}).then(function(reservationfound){
+
+                           res.reservationFound=reservationfound.dataValues;
+                            models.account.findOne({where:{id:reservationfound.dataValues.accountId }}).then(function(accountFound){
+                                res.accountFound=accountFound.dataValues;
+                               tab.push(res)
+
+                            })
+
+                        })
+
+                    })
+                    setTimeout(function(){ cb(tab)},500)
+
+
+                }
+
+
+
+        });
+
+
+    })
+}
+
+
+/**
+ * this function return all affected room and their user
+ */
+var getAvailableRoomByIdHotel=function(hotelId,cb) {
+
+    pg.connect(conString, function (err, dbclient, ok) {
+
+        if (err) {
+
+            return console.error('could not connect to the database ' + err);
+        }
+
+        dbclient.query('SELECT * FROM rooms where disponibility = true and "hotelId"=$1' ,[hotelId], function (err, rows) {
+            if(err){console.log(err)}
+            else{
+                 cb(rows.rows)
+
+                }
+
+
+
+
+
+
+
+        });
+
+
+    })
+}
+/***
+ * for cron job
+ *
+ * @param cb
+ */
+var getNonAvailableRoomForCronJob=function(cb) {
+
+    pg.connect(conString, function (err, dbclient, ok) {
+
+        if (err) {
+
+            return console.error('could not connect to the database ' + err);
+        }
+
+        dbclient.query('SELECT * FROM rooms where disponibility = false ' , function (err, rows) {
+            if(err){console.log(err)}
+            else{
+                 cb(rows.rows)
+
+                }
+
+
+
+
+
+
+
+        });
+
+
+    })
+}
 
 
 
@@ -125,6 +233,9 @@ exports.getoomById=getroomById;
 exports.getroomByIdHotel=getroomByIdHotel;
 exports.affectRoomToReservation=affectRoomToReservation;
 exports.setRoomAvailable=setRoomAvailable;
+exports.getAffectionRoom=getAffectionRoom;
+exports.getAvailableRoomByIdHotel=getAvailableRoomByIdHotel;
+exports.getNonAvailableRoomForCronJob=getNonAvailableRoomForCronJob;
 
 
 
